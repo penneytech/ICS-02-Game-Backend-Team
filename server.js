@@ -19,6 +19,7 @@ const clientIdentify = require('./client/clientIdentify.js')
 const clientLogin = require('./client/clientLogin.js'); 
 const clientMessage = require('./client/clientMessage.js'); 
 const clientDisconnect = require('./client/clientDisconnect.js'); 
+const leaderBoard = require('./userData/leaderboardPosition.js');
 
 let intervalID;
 
@@ -63,3 +64,5 @@ server.listen(PORT, () => {
 
     
 });
+
+leaderBoard;

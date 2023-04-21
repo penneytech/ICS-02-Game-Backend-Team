@@ -13,6 +13,9 @@ function clientConnect(socket) {
   // Update list of connected clients
   let connectedclients = globals.getGlobal('connectedclients');
 
+  // get leaderboard object from global.js
+  let leaderboard = globals.getGlobal('leaderboard');
+
   // Add the id of the connected client to the array along with any other relevant client information
   connectedclients.push({
     id: socket.id, 
@@ -25,6 +28,9 @@ function clientConnect(socket) {
 
   // Update the global variable with the updated array
   globals.setGlobal('connectedclients', connectedclients);
+
+  // send leaderboard to client when they connect
+      socket.emit('leaderboard', leaderboard );
 }
 
 // Export the function for other modules to use

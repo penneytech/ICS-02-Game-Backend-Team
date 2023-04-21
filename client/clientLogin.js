@@ -21,7 +21,8 @@ function clientLogin(data, socket, io) {
     console.log(socket.id, "Successful login using default credentials! From", socket.id);
 
     // Send message to the client saying that login was successful
-    socket.emit('loginSucceed');
+    socket.emit('loginSucceed', );
+   
 
     // Update the random connectedclient to include the user name of the logged in user
     let connectedclients = globals.getGlobal("connectedclients");
