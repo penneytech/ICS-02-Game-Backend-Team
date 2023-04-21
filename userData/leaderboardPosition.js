@@ -16,10 +16,8 @@ function leaderBoard() {
   // Sort the scores array in descending order by score
   scores = scores.sort((a, b) => b.score - a.score);
 
-  return scores;
-
-
-
+  // Return the top 10 scores
+  return scores.slice(0, 10);
 }
 
 let leaderboard = JSON.stringify(leaderBoard());
