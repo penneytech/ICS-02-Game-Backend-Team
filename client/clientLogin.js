@@ -5,18 +5,10 @@ This code defines a function that handles a client login attempt.  When a client
 // Import the required functions and modules
 const globals = require("../globals.js");
 const credentials = require("../credentials.json");
-const clientCheckDoubleLogin = require('./clientCheckDoubleLogin.js') 
 
-// Define an object to keep track of logged in users
-const loggedInUsers = {};
-
+// Define a function to handle a client login attempt
 function clientLogin(data, socket, io) {
   console.log("");
-
-   if(clientCheckDoubleLogin(data, socket, io)) {
-       socket.emit("loginFailed", "You are already logged in!")
-       return;
-   }
 
   // Check if provided username and password match any of the default credentials
   const match = credentials.find(cred =>
@@ -31,9 +23,6 @@ function clientLogin(data, socket, io) {
     // Send message to the client saying that login was successful
     socket.emit('loginSucceed', );
    
-
-    // Update the logged in users object to include the current user
-    loggedInUsers[socket.id] = data.username;
 
     // Update the random connectedclient to include the user name of the logged in user
     let connectedclients = globals.getGlobal("connectedclients");

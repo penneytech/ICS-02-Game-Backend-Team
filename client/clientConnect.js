@@ -20,6 +20,7 @@ function clientConnect(socket) {
   connectedclients.push({
     id: socket.id, 
     username: "",
+    currentscore: 0,
     // Any other client information here
   });
 
@@ -35,5 +36,3 @@ function clientConnect(socket) {
 
 // Export the function for other modules to use
 module.exports = clientConnect;
-
-//This is it - Seepersaud

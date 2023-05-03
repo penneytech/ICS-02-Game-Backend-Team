@@ -20,6 +20,9 @@ const clientLogin = require('./client/clientLogin.js');
 const clientMessage = require('./client/clientMessage.js'); 
 const clientDisconnect = require('./client/clientDisconnect.js'); 
 const leaderBoard = require('./userData/leaderboardPosition.js');
+const clientScore = require('./client/clientScore.js');
+const scoreAdd = require('./client/scoreAdd.js');
+
 
 let intervalID;
 
@@ -41,11 +44,23 @@ io.on('connection', (socket) => {
     socket.on('message', (message) => {
     clientMessage(message, socket, io)
     });
-    
+
+// Handle point collection
+  socket.on('collectPoints', (message) => {
+    clientScore(message, socket, io);
+  });
+
+  
     // Handle Client Disconnections
     socket.on('disconnect', () => {
     clientDisconnect(socket, io);
+      scoreAdd();
     });   
+
+  // Handle End of Round
+  socket.on('roundEnd', () => {
+    scoreAdd();3
+  })
 
         // Start sending test messages to all clients in the 'users' room
     if (!intervalID) {
@@ -65,4 +80,4 @@ server.listen(PORT, () => {
     
 });
 
-leaderBoard;
+leaderBoard();
