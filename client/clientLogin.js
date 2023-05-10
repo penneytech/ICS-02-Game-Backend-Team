@@ -6,6 +6,7 @@ This code defines a function that handles a client login attempt.  When a client
 const globals = require("../globals.js");
 const credentials = require("../credentials.json");
 const clientCheckDoubleLogin = require('./clientCheckDoubleLogin.js') 
+const clientUserAchievement = require('./clientUserAchievement.js');
 
 // Define an object to keep track of logged in users
 const loggedInUsers = {};
@@ -31,7 +32,14 @@ function clientLogin(data, socket, io) {
     // Send message to the client saying that login was successful
     socket.emit('loginSucceed', );
    
-
+    clientUserAchievement(data, (userAchievement) => {
+      socket.emit('loginSucceed', {
+        user: data.username,
+        achievement: ''
+      });
+      socket.emit('getUserAchievement', data.username);
+    });
+    
     // Update the logged in users object to include the current user
     loggedInUsers[socket.id] = data.username;
 

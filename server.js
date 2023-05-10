@@ -22,6 +22,7 @@ const clientDisconnect = require('./client/clientDisconnect.js');
 const leaderBoard = require('./userData/leaderboardPosition.js');
 const clientScore = require('./client/clientScore.js');
 const scoreAdd = require('./client/scoreAdd.js');
+const clientUserAchievement = require('./client/clientUserAchievement.js');
 
 let intervalID;
 
@@ -58,6 +59,14 @@ io.on('connection', (socket) => {
   socket.on('disconnect', () => {
     clientDisconnect(socket, io);
     scoreAdd();
+  });
+
+    // Handle client requests for user achievement
+    socket.on('getUserAchievement', (username) => {
+      console.log('[Server]: Received getUserAchievement request for user:', username);
+      const userAchievement = clientUserAchievement({ username: username });
+      // Emit the user achievement data back to the client
+      socket.emit('userAchievement', userAchievement);
   });
 
   // Start sending test messages to all clients in the 'users' room
