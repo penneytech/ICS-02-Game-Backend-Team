@@ -4,10 +4,10 @@ const cors = require('cors');
 const app = express();
 const server = require('http').createServer(app);
 const io = require('socket.io')(server, {
-  cors: {
-    origin: '*', // You can restrict this to specific domains if needed.
-    methods: ['GET', 'POST']
-  }
+    cors: {
+        origin: '*', // You can restrict this to specific domains if needed.
+        methods: ['GET', 'POST']
+    }
 });
 const PORT = process.env.PORT || 3000;
 app.use(cors());
@@ -20,30 +20,48 @@ const clientLogin = require('./client/clientLogin.js');
 const clientMessage = require('./client/clientMessage.js');
 const clientDisconnect = require('./client/clientDisconnect.js');
 const leaderBoard = require('./userData/leaderboardPosition.js');
+const removingTreasure = require('./management/removingTreasure.js')
+// GENERATE TREASURE ON SERVER START
+require('./management/generateTreasure.js');
 const clientScore = require('./client/clientScore.js');
 const scoreAdd = require('./client/scoreAdd.js');
 const clientUserAchievement = require('./client/clientUserAchievement.js');
 
-let intervalID;
 
+// Test generation
+require('./management/testwallsfloor.js')
+
+// CONNECTION DETAILS
+let intervalID;
 io.on('connection', (socket) => {
 
   // Handle Client Connections
   clientConnect(socket);
 
-  // Handle Client Messages
-  socket.on('ident', (message) => {
-    clientIdentify(message, socket, io)
-  });
+    // Handle Client Messages
+    socket.on('ident', (message) => {
+        clientIdentify(message, socket, io)
+    });
 
-  socket.on('login', (message) => {
-    clientLogin(message, socket, io)
-  });
+    socket.on('login', (message) => {
+        clientLogin(message, socket, io)
+    });
 
-  // Handle Client Messages
-  socket.on('message', (message) => {
-    clientMessage(message, socket, io)
-  });
+    // Handle Client Messages
+    socket.on('message', (message) => {
+        clientMessage(message, socket, io)
+    });
+
+    // Handle Client Disconnections
+    socket.on('disconnect', () => {
+        clientDisconnect(socket, io);
+    });
+
+    // // Gem Collected Variable
+
+    socket.on('gemcollected', (message) => {
+        removingTreasure(message, socket, io);
+    });
 
   // Handle point collection
   socket.on('collectPoints', (message) => {
@@ -78,13 +96,10 @@ io.on('connection', (socket) => {
         'This is a test message from the server!');
     }, 10000);
   }
-
 });
 
 server.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-
-
+    console.log(`Server is running on port ${PORT}`);
 });
 
 leaderBoard();
