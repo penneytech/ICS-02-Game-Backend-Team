@@ -23,6 +23,10 @@ const leaderBoard = require('./userData/leaderboardPosition.js');
 const removingTreasure = require('./management/removingTreasure.js')
 // GENERATE TREASURE ON SERVER START
 require('./management/generateTreasure.js');
+const clientScore = require('./client/clientScore.js');
+const scoreAdd = require('./client/scoreAdd.js');
+const clientUserAchievement = require('./client/clientUserAchievement.js');
+
 
 // Test generation
 require('./management/testwallsfloor.js')
@@ -31,8 +35,8 @@ require('./management/testwallsfloor.js')
 let intervalID;
 io.on('connection', (socket) => {
 
-    // Handle Client Connections
-    clientConnect(socket);
+  // Handle Client Connections
+  clientConnect(socket);
 
     // Handle Client Messages
     socket.on('ident', (message) => {
@@ -59,22 +63,43 @@ io.on('connection', (socket) => {
         removingTreasure(message, socket, io);
     });
 
-    // Start sending test messages to all clients in the 'users' room
-    if (!intervalID) {
-        intervalID = setInterval(() => {
-            //console.log("Test message sent to users")
-            io.to('user').emit(
-                'message',
-                'This is a test message from the server!');
-        }, 10000);
-    }
+  // Handle point collection
+  socket.on('collectPoints', (message) => {
+    clientScore(message, socket, io);
+  });
 
+  // Handle End of Round
+  socket.on('roundEnd', () => {
+    scoreAdd(); 3
+  })
+
+  // Handle Client Disconnections
+  socket.on('disconnect', () => {
+    clientDisconnect(socket, io);
+    scoreAdd();
+  });
+
+    // Handle client requests for user achievement
+    socket.on('getUserAchievement', (username) => {
+      console.log('[Server]: Received getUserAchievement request for user:', username);
+      const userAchievement = clientUserAchievement({ username: username });
+      // Emit the user achievement data back to the client
+      socket.emit('userAchievement', userAchievement);
+  });
+
+  // Start sending test messages to all clients in the 'users' room
+  if (!intervalID) {
+    intervalID = setInterval(() => {
+      //console.log("Test message sent to users")
+      io.to('user').emit(
+        'message',
+        'This is a test message from the server!');
+    }, 10000);
+  }
 });
 
 server.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
-
-
 });
 
-leaderBoard;
+leaderBoard();
