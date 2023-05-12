@@ -2,7 +2,7 @@
 const globals = {
     connectedclients: [], // A string list of all clients connected
     clients: [], // Array of all websocket clients
-  leaderboard:0 , // leaderboard position 
+    leaderboard:0 , // leaderboard position 
 };
 
 // Define a function to set a global variable
@@ -13,7 +13,7 @@ function setGlobal(name, value) {
 
 // Define a function to get a global variable
 function getGlobal(name) {
-    console.log(`Getting global variable '${name}': '${globals[name]}'`);
+    // console.log(`Getting global variable '${name}': '${JSON.stringify(globals[name], null, 2)}'`);
     return globals[name];
 }
 

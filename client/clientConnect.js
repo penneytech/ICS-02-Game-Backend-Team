@@ -20,6 +20,9 @@ function clientConnect(socket) {
   connectedclients.push({
     id: socket.id, 
     username: "",
+    xPosition: 0,
+    yPosition: 0,
+    currentscore: 0,
     // Any other client information here
   });
 
