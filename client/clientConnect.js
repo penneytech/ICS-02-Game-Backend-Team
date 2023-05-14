@@ -10,6 +10,10 @@ function clientConnect(socket) {
   console.log("");
   console.log('A user connected.');
 
+ // Send treasure to frontend 
+    let treasure = globals.getGlobal('treasure');
+socket.emit('treasureinit', treasure);
+  
   // Update list of connected clients
   let connectedclients = globals.getGlobal('connectedclients');
 
@@ -20,8 +24,8 @@ function clientConnect(socket) {
   connectedclients.push({
     id: socket.id, 
     username: "",
-    xPosition: 0,
-    yPosition: 0,
+    x: 0,
+    y: 0,
     currentscore: 0,
     // Any other client information here
   });

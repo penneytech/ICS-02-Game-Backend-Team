@@ -8,6 +8,8 @@ const credentials = require("../credentials.json");
 const clientCheckDoubleLogin = require('./clientCheckDoubleLogin.js')
 const clientSpawn = require("../playerPosition/clientSpawn.js");
 const sendPositions = require("../playerPosition/sendPositions.js");
+const clientCheckDoubleLogin = require('./clientCheckDoubleLogin.js') 
+const clientUserAchievement = require('./clientUserAchievement.js');
 
 // Define an object to keep track of logged in users
 const loggedInUsers = {};
@@ -39,6 +41,15 @@ function clientLogin(data, socket, io) {
     // Send positions of all connected clients to the newly joined user
     sendPositions(socket, io);
 
+   
+    clientUserAchievement(data, (userAchievement) => {
+      socket.emit('loginSucceed', {
+        user: data.username,
+        achievement: ''
+      });
+      socket.emit('getUserAchievement', data.username);
+    });
+    
     // Update the logged in users object to include the current user
     loggedInUsers[socket.id] = data.username;
 
