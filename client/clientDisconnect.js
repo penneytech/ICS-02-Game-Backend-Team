@@ -4,6 +4,7 @@ This code defines a function that handles a client disconnection from the server
 
 // Import the required functions from the 'globals.js' module
 const globals = require('../globals.js');
+const scoreAdd = require('./scoreAdd.js');
 
 // Define a function to handle a client disconnection
 function clientDisconnect(socket, io) {
@@ -18,6 +19,10 @@ function clientDisconnect(socket, io) {
 
   // If the client is found, remove it from the array
   if (index !== -1) {
+    let connectedclients = globals.getGlobal('connectedclients');
+    //call scoreAdd function
+    scoreAdd(connectedclients[index].username, connectedclients[index].currentscore);
+    
     console.log('[clientDisconnect]: Socket ID found!', socket.id)
     connectedclients.splice(index, 1);
   }
@@ -30,7 +35,7 @@ function clientDisconnect(socket, io) {
 
   // Emit the 'update' event to the 'frontendmonitor' room with the current list of user IDs
   console.log("[clientIdentify]: Sending user ID's:", connectedclients);
-  io.to('frontendmonitor').emit('update', connectedclients);
+  io.to('frontendmonitor').emit('update', connectedclients);                                
 }
 
 // Export the function for other modules to use

@@ -22,8 +22,8 @@ function setGlobal(name, value) {
 
 // Define a function to get a global variable
 function getGlobal(name) {
-  console.log(`Getting global variable '${name}': '${globals[name]}'`);
-  return globals[name];
+    // console.log(`Getting global variable '${name}': '${JSON.stringify(globals[name], null, 2)}'`);
+    return globals[name];
 }
 
 // Export the functions

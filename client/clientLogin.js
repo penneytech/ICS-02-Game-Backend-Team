@@ -5,6 +5,9 @@ This code defines a function that handles a client login attempt.  When a client
 // Import the required functions and modules
 const globals = require("../globals.js");
 const credentials = require("../credentials.json");
+const clientCheckDoubleLogin = require('./clientCheckDoubleLogin.js')
+const clientSpawn = require("../playerPosition/clientSpawn.js");
+const sendPositions = require("../playerPosition/sendPositions.js");
 const clientCheckDoubleLogin = require('./clientCheckDoubleLogin.js') 
 const clientUserAchievement = require('./clientUserAchievement.js');
 
@@ -30,7 +33,14 @@ function clientLogin(data, socket, io) {
     console.log(socket.id, "Successful login using default credentials! From", socket.id);
 
     // Send message to the client saying that login was successful
-    socket.emit('loginSucceed', );
+    socket.emit('loginSucceed');
+
+     // Call clientSpawn function to assign a random spawn point to the user
+    clientSpawn(data, socket, io);
+    
+    // Send positions of all connected clients to the newly joined user
+    sendPositions(socket, io);
+
    
     clientUserAchievement(data, (userAchievement) => {
       socket.emit('loginSucceed', {
@@ -63,7 +73,14 @@ function clientLogin(data, socket, io) {
     // Send message to the client saying that login was unsuccessful
     socket.emit('loginFailed', 'Invalid username or password');
   }
+  
+// clientSpawn();
+
+
+  
 }
+
+
 
 // Export the function for other modules to use
 module.exports = clientLogin;

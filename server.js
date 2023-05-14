@@ -1,4 +1,3 @@
-// Server Setup & Dependancies 
 const express = require('express');
 const cors = require('cors');
 const app = express();
@@ -14,6 +13,7 @@ app.use(cors());
 app.use(express.static('public'));
 
 // Our Imports
+const globals = require('./globals.js');
 const clientConnect = require('./client/clientConnect.js');
 const clientIdentify = require('./client/clientIdentify.js')
 const clientLogin = require('./client/clientLogin.js');
@@ -25,6 +25,7 @@ const removingTreasure = require('./management/removingTreasure.js')
 require('./management/generateTreasure.js');
 const clientScore = require('./client/clientScore.js');
 const scoreAdd = require('./client/scoreAdd.js');
+const clientUpdatePosition = require('./playerPosition/clientUpdatePosition.js');
 const clientUserAchievement = require('./client/clientUserAchievement.js');
 
 
@@ -68,15 +69,42 @@ io.on('connection', (socket) => {
     clientScore(message, socket, io);
   });
 
-  // Handle End of Round
-  socket.on('roundEnd', () => {
-    scoreAdd(); 3
-  })
+
+  // Handles user data position
+    socket.on('updatePosition', (data) => {
+    console.log(`Received player position: ${JSON.stringify(data)}`);
+    clientUpdatePosition(data, socket, io);
+  });
+
+  // Set a timer to broadcast all client positions every 1000ms (1 second)
+/*  setInterval(() => {
+    let connectedclients = globals.getGlobal('connectedclients');
+    // Iterate over each client and emit their position
+    connectedclients
+      .filter(client => client.username !== "")
+      .forEach(client => {
+      io.emit('updatePosition', {
+        username: client.username,
+        xPosition: client.xPosition,
+        yPosition: client.yPosition
+      });
+    });
+}, 1000);
+  */
 
   // Handle Client Disconnections
   socket.on('disconnect', () => {
+    
     clientDisconnect(socket, io);
-    scoreAdd();
+  });
+
+    
+  // Handle End of Round
+  socket.on('roundEnd', () => {
+    let connectedclients = globals.getGlobal('connectedclients');
+    connectedclients.forEach(client => {
+    scoreAdd(client.username, client.currentscore);  
+    });
   });
 
     // Handle client requests for user achievement

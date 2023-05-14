@@ -24,8 +24,8 @@ socket.emit('treasureinit', treasure);
   connectedclients.push({
     id: socket.id, 
     username: "",
-    xpos: 0,
-    ypos: 0,
+    x: 0,
+    y: 0,
     currentscore: 0,
     // Any other client information here
   });
