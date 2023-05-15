@@ -16,7 +16,7 @@ const globals = {
 
 // Define a function to set a global variable
 function setGlobal(name, value) {
-  console.log(`Setting global variable '${name}' to '${value}'`);
+  //console.log(`Setting global variable '${name}' to '${value}'`);
   globals[name] = value;
 }
 
