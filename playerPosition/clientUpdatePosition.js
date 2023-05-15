@@ -15,8 +15,10 @@ console.log("clientUpdatePosition.js", data)
     // Emit the new position to all clients
     io.emit('clientupdateposition', {
         username: connectedclients[clientIndex].username,
-        xPosition: data.x,
-        yPosition: data.y
+        x: data.x,
+        y: data.y,
+        type: data.type,
+        character: data.character  
     });
 
 }

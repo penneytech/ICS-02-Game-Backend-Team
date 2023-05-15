@@ -27,7 +27,8 @@ socket.emit('treasureinit', treasure);
     x: 0,
     y: 0,
     currentscore: 0,
-    type: "piratemage"
+    type: "water",
+    character: "piratemage",
     // Any other client information here
   });
 

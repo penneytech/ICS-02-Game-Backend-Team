@@ -28,10 +28,6 @@ const scoreAdd = require('./client/scoreAdd.js');
 const clientUpdatePosition = require('./playerPosition/clientUpdatePosition.js');
 const clientUserAchievement = require('./client/clientUserAchievement.js');
 
-
-// Test generation
-require('./management/testwallsfloor.js')
-
 // CONNECTION DETAILS
 let intervalID;
 io.on('connection', (socket) => {
