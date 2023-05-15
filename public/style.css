@@ -1,37 +1,16 @@
 th {
-    width: 293px;
-}
-#leaderboard {
-  width: 50%;
-  margin: 0 auto;
+  width: 293px;
 }
 
-h1 {
-  text-align: center;
+#game-canvas {
+  border-style: solid;
 }
 
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 10px;
-  text-align: center;
+.container {
+display: flex;
 }
 
-thead {
-  font-size: 1.2rem;
-  background-color: #eee;
-}
-
-tbody tr:nth-child(odd) {
-  background-color: #f8f8f8;
-}
-
-td, th {
-  padding: 10px;
-  border-bottom: 1px solid #ccc;
-}
-
-th {
-  font-weight: bold;
-  text-align: left;
+.game {
+flex: 1;
+margin-right: 20px;
 }

@@ -6,7 +6,7 @@ This code defines a function that handles a client connection to the server. Whe
 const globals = require('../globals.js');
 
 // Define a function to handle a client connection
-function clientConnect(socket) {
+function clientConnect(socket, io) {
   console.log("");
   console.log('A user connected.');
 
@@ -23,15 +23,17 @@ socket.emit('treasureinit', treasure);
   // Add the id of the connected client to the array along with any other relevant client information
   connectedclients.push({
     id: socket.id, 
-    username: "",
+    username: "user1",
     x: 0,
     y: 0,
     currentscore: 0,
+    type: "piratemage"
     // Any other client information here
   });
 
   // Log the list of connected clients to the console
   console.log('Connected clients:', connectedclients);
+  io.to('frontendmonitor').emit('update', connectedclients);
 
   // Update the global variable with the updated array
   globals.setGlobal('connectedclients', connectedclients);

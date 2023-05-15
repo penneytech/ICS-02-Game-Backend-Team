@@ -1,4 +1,5 @@
 const globals = require("../globals.js");
+const generateRandomPosition = require('../management/generateRandomPosition.js');
 
 //get a random number between N and M
 function getRandom(N, M) {
@@ -6,18 +7,21 @@ function getRandom(N, M) {
 }
 
 function clientSpawn(data, socket, io) {
+
+  console.log("clientSpawn.js", data)
   let connectedclients = globals.getGlobal('connectedclients');
   const clientIndex = connectedclients.findIndex(client => client.id === socket.id);
 
   //get random position
-  connectedclients[clientIndex].xPosition = getRandom(0, 600);
-  connectedclients[clientIndex].yPosition = getRandom(0, 600);
+  const position = generateRandomPosition(32, 32);
+  connectedclients[clientIndex].xPosition = position.x;
+  connectedclients[clientIndex].yPosition = position.y;
 
   // Update the global variable with the updated array
   globals.setGlobal('connectedclients', connectedclients);
 
   //sent position to client
-  socket.emit('clientSpawn', {
+  socket.emit('clientspawn', {
     username: connectedclients[clientIndex].username,
     xPosition: connectedclients[clientIndex].xPosition,
     yPosition: connectedclients[clientIndex].yPosition

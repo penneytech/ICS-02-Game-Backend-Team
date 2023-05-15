@@ -1,7 +1,7 @@
 const globals = require("../globals.js");
 
 function clientUpdatePosition(data, socket, io) {
-
+console.log("clientUpdatePosition.js", data)
     let connectedclients = globals.getGlobal('connectedclients');
     const clientIndex = connectedclients.findIndex(client => client.id === socket.id);
 
@@ -13,7 +13,7 @@ function clientUpdatePosition(data, socket, io) {
     globals.setGlobal('connectedclients', connectedclients);
 
     // Emit the new position to all clients
-    io.emit('updatePosition', {
+    io.emit('clientupdateposition', {
         username: connectedclients[clientIndex].username,
         xPosition: data.x,
         yPosition: data.y
