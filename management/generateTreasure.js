@@ -2,21 +2,27 @@ const globals = require('../globals.js');
 const generateRandomPosition = require('./generateRandomPosition.js');
 
 function generateTreasure(arrayLength) {
-  const type = ["Amber", "Ruby", "Sapphire"];
-  const result = [];
+const gems = [
+{ name: "Amber", value: 10 },
+{ name: "Ruby", value: 20 },
+{ name: "Sapphire", value: 40 }
+];
 
-  for (let i = 0; i < arrayLength; i++) {
-    const randomxy = generateRandomPosition( 32, 32);
-    const randomX = randomxy.x
-    const randomY = randomxy.y
-    const gemIndex = Math.floor(Math.random() * type.length);
-    const gemName = type[gemIndex];
-    const gem = { x: randomX, y: randomY, gem: gemName };
-    result.push(gem);
-  }
+const result = [];
 
-  return result;
+for (let i = 0; i < arrayLength; i++) {
+const randomxy = generateRandomPosition(32, 32);
+const randomX = randomxy.x;
+const randomY = randomxy.y;
+const gemIndex = Math.floor(Math.random() * gems.length);
+const gem = gems[gemIndex];
+const treasure = { x: randomX, y: randomY, gem: gem.name, value: gem.value };
+result.push(treasure);
+}
+
+return result;
 }
 
 const result = generateTreasure(125);
+
 globals.setGlobal('treasure', result);

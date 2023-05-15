@@ -6,7 +6,6 @@ function generateRandomPosition(tileWidth, tileHeight) {
   
     // Get the indexes of tiles labelled as 10
     const tileIndexes = wallsfloor.flatMap((value, index) => value === 10 ? index : []);
-  
     // If no tiles with label 10 exist, return null
     if (tileIndexes.length === 0) {
       return null;
@@ -14,7 +13,7 @@ function generateRandomPosition(tileWidth, tileHeight) {
   
     // Randomly select one of the indexes
     const randomIndex = tileIndexes[Math.floor(Math.random() * tileIndexes.length)];
-  
+
     // Convert the 1D index to 2D coordinates
     const x = Math.floor((randomIndex % mapWidth) * tileWidth);
     const y = Math.floor(randomIndex / mapWidth) * tileHeight;
