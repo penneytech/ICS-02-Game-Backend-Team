@@ -5,7 +5,7 @@ const credentials = require("../credentials.json");
 
 // Define function to handle user achievement messages
 function clientUserAchievement(data) {
-    console.log('[ClientUserAchievement]: Running...', credentials)
+   // console.log('[ClientUserAchievement]: Running...', credentials)
 
     //const username = 'honeydew';
 
@@ -14,9 +14,6 @@ function clientUserAchievement(data) {
     console.log(userAchievement); // --> { "score": 1000 }
     
     return userAchievement;
-
-
-  
 }
 
 function findUserAchievement(array, username) {

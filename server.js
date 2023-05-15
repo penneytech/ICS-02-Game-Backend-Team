@@ -2,14 +2,29 @@ const express = require('express');
 const cors = require('cors');
 const app = express();
 const server = require('http').createServer(app);
+// const io = require('socket.io')(server, {
+//   cors: {
+//     origin: '*', // You can restrict this to specific domains if needed.
+//     methods: ['GET', 'POST']
+//   }
+// });
+const PORT = process.env.PORT || 3000;
+//app.use(cors());
+// app.use(cors({
+//   origin: 'http://127.0.0.1:3000'
+// }));
+
+app.use(cors({
+  origin: ['http://localhost:3000', 'http://127.0.0.1:3000']
+}));
+
 const io = require('socket.io')(server, {
   cors: {
-    origin: '*', // You can restrict this to specific domains if needed.
+    origin: ['http://localhost:5500', 'http://127.0.0.1:5500'],
     methods: ['GET', 'POST']
   }
 });
-const PORT = process.env.PORT || 3000;
-app.use(cors());
+
 app.use(express.static('public'));
 
 // Our Imports
@@ -21,16 +36,13 @@ const clientMessage = require('./client/clientMessage.js');
 const clientDisconnect = require('./client/clientDisconnect.js');
 const leaderBoard = require('./userData/leaderboardPosition.js');
 const removingTreasure = require('./management/removingTreasure.js')
+
 // GENERATE TREASURE ON SERVER START
 require('./management/generateTreasure.js');
-const clientScore = require('./score/clientScore.js');
-const scoreAdd = require('./client/scoreAdd.js');
+
+const scoreAdd = require('./score/scoreAdd.js');
 const clientUpdatePosition = require('./playerPosition/clientUpdatePosition.js');
 const clientUserAchievement = require('./client/clientUserAchievement.js');
-
-
-// Test generation
-require('./management/testwallsfloor.js')
 
 // CONNECTION DETAILS
 let intervalID;
@@ -53,57 +65,31 @@ io.on('connection', (socket) => {
     clientMessage(message, socket, io)
   });
 
-  // Handle Client Disconnections
-  socket.on('disconnect', () => {
-    clientDisconnect(socket, io);
-  });
-
   // // Gem Collected Variable
   socket.on('gemcollected', (message) => {
     removingTreasure(message, socket, io);
   });
 
-  // Handle point collection
-  socket.on('collectPoints', (message) => {
-    clientScore(message, socket, io);
-  });
-
   // Handles user data position
   socket.on('updateposition', (data) => {
-    console.log(`Received player position: ${JSON.stringify(data)}`);
+    //console.log(`Received player position: ${JSON.stringify(data)}`);
     clientUpdatePosition(data, socket, io);
   });
 
-  // Set a timer to broadcast all client positions every 1000ms (1 second)
-  /*  setInterval(() => {
-      let connectedclients = globals.getGlobal('connectedclients');
-      // Iterate over each client and emit their position
-      connectedclients
-        .filter(client => client.username !== "")
-        .forEach(client => {
-        io.emit('updatePosition', {
-          username: client.username,
-          xPosition: client.xPosition,
-          yPosition: client.yPosition
-        });
-      });
-  }, 1000);
-    */
-
   // Handle Client Disconnections
   socket.on('disconnect', () => {
-
+    scoreAdd(socket);
     clientDisconnect(socket, io);
   });
 
 
-  // Handle End of Round
-  socket.on('roundEnd', () => {
-    let connectedclients = globals.getGlobal('connectedclients');
-    connectedclients.forEach(client => {
-      scoreAdd(client.username, client.currentscore);
-    });
-  });
+  // // Handle End of Round
+  // socket.on('roundEnd', () => {
+  //   let connectedclients = globals.getGlobal('connectedclients');
+  //   connectedclients.forEach(client => {
+  //     scoreAdd(client.username, client.currentscore);
+  //   });
+  // });
 
   // Handle client requests for user achievement
   socket.on('getUserAchievement', (username) => {

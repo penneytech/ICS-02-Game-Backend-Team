@@ -21,7 +21,7 @@ function clientIdentify(data, socket, io) {
 
   // Emit the 'update' event to the 'frontendmonitor' room with the current list of user IDs
   let connectedclients = globals.getGlobal("connectedclients");
-  console.log("[clientIdentify]: Sending user ID's:", connectedclients);
+  //console.log("[clientIdentify]: Sending user ID's:", connectedclients);
   io.to('frontendmonitor').emit('update', connectedclients);
 }
 

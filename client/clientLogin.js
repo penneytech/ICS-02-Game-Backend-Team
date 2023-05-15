@@ -55,14 +55,14 @@ function clientLogin(data, socket, io) {
     // Update the random connectedclient to include the user name of the logged in user
     let connectedclients = globals.getGlobal("connectedclients");
     const clientIndex = connectedclients.findIndex(client => client.id === socket.id);
-    console.log("[clientLogin]: Client index:", clientIndex);
+    //console.log("[clientLogin]: Client index:", clientIndex);
     if (clientIndex !== -1) {
       console.log("[clientLogin]: Setting name:", socket.id + " - " + data.username);
       connectedclients[clientIndex].username = data.username;
     }
 
     // Emit the 'update' event to the 'frontendmonitor' room with the current list of user IDs
-    console.log("[clientLogin]: Sending user ID's:", connectedclients);
+   // console.log("[clientLogin]: Sending user ID's:", connectedclients);
     io.to('frontendmonitor').emit('update', connectedclients);
 
   } else {

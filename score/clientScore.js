@@ -1,6 +1,8 @@
 const globals = require('../globals.js');
 
 function clientScore(message, socket, io) {
+  console.log("clientScore.js", message, socket.id, "socket.id")
+  
   let connectedclients = globals.getGlobal('connectedclients');
 
   // Find the client matching the socket.id

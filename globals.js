@@ -4,13 +4,13 @@ const globals = {
   clients: [], // Array of all websocket clients
   leaderboard: 0, // leaderboard position 
   treasure: [
-    { "x": 0, "y": 50, "gem": "Emerald" },
-    { "x": 0, "y": 100, "gem": "Emerald" },
-    { "x": 0, "y": 150, "gem": "Emerald" },
-    { "x": 0, "y": 200, "gem": "Emerald" },
-    { "x": 0, "y": 250, "gem": "Emerald" },
-    { "x": 0, "y": 300, "gem": "Emerald" },
-    { "x": 0, "y": 350, "gem": "Emerald" }
+    { "x": 0, "y": 50, "gem": "Emerald", "value": 10 },
+    { "x": 0, "y": 100, "gem": "Emerald", "value": 10 },
+    { "x": 0, "y": 150, "gem": "Emerald", "value": 10 },
+    { "x": 0, "y": 200, "gem": "Emerald", "value": 10 },
+    { "x": 0, "y": 250, "gem": "Emerald",   "value": 10 },
+    { "x": 0, "y": 300, "gem": "Emerald", "value": 10 },
+    { "x": 0, "y": 350, "gem": "Emerald",   "value": 10 },
   ],
 }
 
