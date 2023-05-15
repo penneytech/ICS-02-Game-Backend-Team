@@ -5,7 +5,6 @@ This code defines a function that handles a client login attempt.  When a client
 // Import the required functions and modules
 const globals = require("../globals.js");
 const credentials = require("../credentials.json");
-const clientCheckDoubleLogin = require('./clientCheckDoubleLogin.js')
 const clientSpawn = require("../playerPosition/clientSpawn.js");
 const sendPositions = require("../playerPosition/sendPositions.js");
 const clientCheckDoubleLogin = require('./clientCheckDoubleLogin.js') 
