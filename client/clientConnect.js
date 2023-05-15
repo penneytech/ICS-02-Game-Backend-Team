@@ -23,7 +23,7 @@ socket.emit('treasureinit', treasure);
   // Add the id of the connected client to the array along with any other relevant client information
   connectedclients.push({
     id: socket.id, 
-    username: "user1",
+    username: "",
     x: 0,
     y: 0,
     currentscore: 0,

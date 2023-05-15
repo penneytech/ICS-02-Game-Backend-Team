@@ -6,8 +6,8 @@ console.log("clientUpdatePosition.js", data)
     const clientIndex = connectedclients.findIndex(client => client.id === socket.id);
 
     // Update the client's position with the new coordinates from the message
-    connectedclients[clientIndex].xPosition = data.x;
-    connectedclients[clientIndex].yPosition = data.y;
+    connectedclients[clientIndex].x = data.x;
+    connectedclients[clientIndex].y = data.y;
 
     // Update the global variable with the updated array
     globals.setGlobal('connectedclients', connectedclients);
@@ -20,6 +20,9 @@ console.log("clientUpdatePosition.js", data)
         type: data.type,
         character: data.character  
     });
+
+    io.to('frontendmonitor').emit('update', connectedclients);
+
 
 }
 module.exports = clientUpdatePosition;

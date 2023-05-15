@@ -6,9 +6,11 @@ const context = canvas.getContext("2d");
 
 // Function to scale the real map coordinates to canvas coordinates
 function scaleCoordinates(x, y) {
-    const scale = 400 / 6000; // Scale factor based on canvas size and real map size
-    const scaledX = x * scale;
-    const scaledY = y * scale;
+    const scalex = 400 / 1280; // Scale factor based on canvas size and real map size
+    const scaley = 600 / 1920; // Scale factor based on canvas size and real map size
+
+    const scaledX = x * scalex;
+    const scaledY = y * scaley;
     return { x: scaledX, y: scaledY };
 }
 
