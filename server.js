@@ -36,6 +36,7 @@ const clientMessage = require('./client/clientMessage.js');
 const clientDisconnect = require('./client/clientDisconnect.js');
 const leaderBoard = require('./userData/leaderboardPosition.js');
 const removingTreasure = require('./management/removingTreasure.js')
+const hitOpponent = require('./playerPosition/hitOpponent.js');
 
 const setCharacter = require('./userData/setCharacter.js');
 const setElement = require('./userData/setElement.js');
@@ -89,6 +90,12 @@ io.on('connection', (socket) => {
   socket.on('elementselect', (message) => {
     setElement(message, socket);
   });
+
+  // Hitting An Opponent
+  socket.on('hitopponent', (message) => {
+    hitOpponent(message, socket, io);
+  });
+
 
   // Handle Client Disconnections
   socket.on('disconnect', () => {

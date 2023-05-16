@@ -14,8 +14,8 @@ function clientSpawn(data, socket, io) {
 
   //get random position
   const position = generateRandomPosition(32, 32);
-  connectedclients[clientIndex].xPosition = position.x;
-  connectedclients[clientIndex].yPosition = position.y;
+  connectedclients[clientIndex].x = position.x;
+  connectedclients[clientIndex].y = position.y;
 
   // Update the global variable with the updated array
   globals.setGlobal('connectedclients', connectedclients);
@@ -23,8 +23,8 @@ function clientSpawn(data, socket, io) {
   //sent position to client
   socket.emit('clientspawn', {
     username: connectedclients[clientIndex].username,
-    xPosition: connectedclients[clientIndex].xPosition,
-    yPosition: connectedclients[clientIndex].yPosition
+    x: connectedclients[clientIndex].x,
+    y: connectedclients[clientIndex].y
   });
 
 }
