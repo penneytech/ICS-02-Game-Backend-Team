@@ -37,6 +37,9 @@ const clientDisconnect = require('./client/clientDisconnect.js');
 const leaderBoard = require('./userData/leaderboardPosition.js');
 const removingTreasure = require('./management/removingTreasure.js')
 
+const setCharacter = require('./userData/setCharacter.js');
+const setElement = require('./userData/setElement.js');
+
 // GENERATE TREASURE ON SERVER START
 require('./management/generateTreasure.js');
 
@@ -65,7 +68,7 @@ io.on('connection', (socket) => {
     clientMessage(message, socket, io)
   });
 
-  // // Gem Collected Variable
+  // Gem Collected Variable
   socket.on('gemcollected', (message) => {
     removingTreasure(message, socket, io);
   });
@@ -74,6 +77,17 @@ io.on('connection', (socket) => {
   socket.on('updateposition', (data) => {
     //console.log(`Received player position: ${JSON.stringify(data)}`);
     clientUpdatePosition(data, socket, io);
+  });
+
+  // Setting character
+  socket.on('characterselect', (message) => {
+    console.log("characterselect", message);
+    setCharacter(message, socket);
+  });
+
+  // Setting element
+  socket.on('elementselect', (message) => {
+   // setElement(message, socket, io);
   });
 
   // Handle Client Disconnections

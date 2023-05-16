@@ -1,6 +1,8 @@
 const globals = require('../globals.js');
+const ingameleaderboard = require('./ingameleaderboard.js');
 
 function clientScore(message, socket, io) {
+
   console.log("clientScore.js", message, socket.id, "socket.id")
   
   let connectedclients = globals.getGlobal('connectedclients');
@@ -14,6 +16,9 @@ function clientScore(message, socket, io) {
 
     // Update the global variable with the updated array
     globals.setGlobal('connectedclients', connectedclients);
+
+    socket.emit('myscore', connectedclients[clientIndex].currentscore);
+    socket.emit('ingameleaderboard', ingameleaderboard())
   }
 }
 

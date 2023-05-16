@@ -8,9 +8,10 @@ function leaderBoard() {
   // Parse the JSON string to an array of user objects
   let users = JSON.parse(credentials);
 
-  // Map each user object to a new object that contains only the username and score fields
+  // Map each user object to a new object that contains the username and the sum of scores
   let scores = users.map(user => {
-    return { username: user.username, score: user.userachievement.score };
+    let totalScore = user.userachievement.score.reduce((sum, obj) => sum + obj.score, 0);
+    return { username: user.username, score: totalScore };
   });
 
   // Sort the scores array in descending order by score
