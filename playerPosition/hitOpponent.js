@@ -12,7 +12,7 @@ function hitOpponent(message, socket, io) {
   hitReports.set(user, hit);
 
   // Check if both users have hit each other
-  if (hitReports.has(user) && hitReports.get(user) === user) {
+  if (hitReports.has(user) && hitReports.get(user) === hit) {
     console.log(`${user} hit ${hit}`);
     // Register the hit logic here
 
@@ -21,5 +21,6 @@ function hitOpponent(message, socket, io) {
     hitReports.delete(hit);
   }
 }
+
 
 module.exports = hitOpponent;
