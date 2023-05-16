@@ -87,7 +87,7 @@ io.on('connection', (socket) => {
 
   // Setting element
   socket.on('elementselect', (message) => {
-   // setElement(message, socket, io);
+    setElement(message, socket);
   });
 
   // Handle Client Disconnections

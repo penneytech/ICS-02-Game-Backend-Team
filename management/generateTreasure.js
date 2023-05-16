@@ -23,6 +23,6 @@ result.push(treasure);
 return result;
 }
 
-const result = generateTreasure(125);
+const result = generateTreasure(50);
 
 globals.setGlobal('treasure', result);
