@@ -18,7 +18,7 @@ function clientScore(message, socket, io) {
     globals.setGlobal('connectedclients', connectedclients);
 
     socket.emit('myscore', connectedclients[clientIndex].currentscore);
-    socket.emit('ingameleaderboard', ingameleaderboard())
+    io.emit('ingameleaderboard', ingameleaderboard())
   }
 }
 

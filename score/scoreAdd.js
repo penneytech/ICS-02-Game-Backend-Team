@@ -35,7 +35,7 @@ function scoreAdd(socket) {
     try {
       // Parse the JSON data
       const credentials = JSON.parse(data);
-      console.log("CREDENTIALS", credentials);
+      //console.log("CREDENTIALS", credentials);
 
       // Find the user object that corresponds to the client
       const user = credentials.find(user => user.username === tempusername);

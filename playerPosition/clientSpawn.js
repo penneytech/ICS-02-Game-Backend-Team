@@ -8,7 +8,7 @@ function getRandom(N, M) {
 
 function clientSpawn(data, socket, io) {
 
-  console.log("clientSpawn.js", data)
+  //console.log("clientSpawn.js", data)
   let connectedclients = globals.getGlobal('connectedclients');
   const clientIndex = connectedclients.findIndex(client => client.id === socket.id);
 
