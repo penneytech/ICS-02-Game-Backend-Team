@@ -70,8 +70,27 @@ io.on('connection', (socket) => {
   });
 
   // Gem Collected Variable
-  socket.on('gemcollected', (message) => {
-    removingTreasure(message, socket, io);
+  socket.on('gemcollected', (index) => {
+    let connectedclients = globals.getGlobal('connectedclients');
+    const clientIndex = connectedclients.findIndex(client => client.id === socket.id);
+
+    if (clientIndex !== -1) {
+      let client = connectedclients[clientIndex];
+    
+      // Check if the client is trying to collect the same gem
+      if(client.lastGem !== index) {
+        // If not, let them collect the gem
+        removingTreasure(index, socket, io);
+        client.lastGem = index;
+
+        // Save the updated client data
+        connectedclients[clientIndex] = client;
+        globals.setGlobal('connectedclients', connectedclients);
+      } else {
+        // If they are trying to collect the same gem, ignore the request
+        console.log(`Client ${client.id} tried to collect the same gem twice.`);
+    }
+  }
   });
 
   // Handles user data position

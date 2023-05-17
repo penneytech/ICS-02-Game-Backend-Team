@@ -29,6 +29,7 @@ function clientConnect(socket, io) {
     currentscore: 0,
     element: "water",
     character: "Mage",
+    lastGem: -1, //The last gem Collected by the player
     // Any other client information here
   });
 

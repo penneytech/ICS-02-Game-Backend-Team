@@ -39,7 +39,6 @@ function clientLogin(data, socket, io) {
     
     // Send positions of all connected clients to the newly joined user
     sendPositions(socket, io);
-
    
     clientUserAchievement(data, (userAchievement) => {
       socket.emit('loginSucceed', {
