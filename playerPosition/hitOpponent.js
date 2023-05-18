@@ -16,6 +16,12 @@ function hitOpponent(message, socket, io) {
     console.log(`${user} hit ${hit}`);
     // Register the hit logic here
 
+let character = "Rogue";
+let element = "Water";
+let maxpointsremoved = 200;
+
+      
+
     // Once the hit is registered, remove the hit reports from the map
     hitReports.delete(user);
     hitReports.delete(hit);
