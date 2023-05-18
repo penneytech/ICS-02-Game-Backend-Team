@@ -17,7 +17,7 @@ function clientUpdatePosition(data, socket, io) {
         username: connectedclients[clientIndex].username,
         x: data.x,
         y: data.y,
-        type: data.type,
+        element: data.element,
         character: data.character  
     });
 

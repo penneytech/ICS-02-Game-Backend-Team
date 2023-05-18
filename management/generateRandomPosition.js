@@ -1,6 +1,6 @@
 const wallsfloor = require('./wallsfloor.js');
 
-function generateRandomPosition(tileWidth, tileHeight, occupiedPositions) {
+function generateRandomPosition(tileWidth, tileHeight) {
     // Get the width of the map in tiles
     const mapWidth = 40;
 
@@ -11,7 +11,7 @@ function generateRandomPosition(tileWidth, tileHeight, occupiedPositions) {
         return null;
     }
   
-    while (true) {
+   // while (true) {
         // Randomly select one of the indexes
         const randomIndex = tileIndexes[Math.floor(Math.random() * tileIndexes.length)];
 
@@ -20,12 +20,12 @@ function generateRandomPosition(tileWidth, tileHeight, occupiedPositions) {
         const y = Math.floor(randomIndex / mapWidth) * tileHeight;
 
         // Check if the position is already occupied
-        if (!occupiedPositions.some(pos => pos.x === x && pos.y === y)) {
+        //if (!occupiedPositions.some(pos => pos.x === x && pos.y === y)) {
             return { x, y };
-        } else {
-            console.log("POSITION ALREADY TAKEN");
-        }
-    }
+        //} else {
+          //  console.log("POSITION ALREADY TAKEN");
+        //}
+   // }
 }
 
 module.exports = generateRandomPosition;
