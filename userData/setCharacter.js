@@ -3,7 +3,7 @@ const path = require('path');
 const globals = require('../globals.js');
 
 function setCharacter(message, socket) {
-  console.log('Setting character for connected client:', socket.id);
+  console.log('Setting character for connected client:', socket.id, message);
 
   let connectedclients = globals.getGlobal('connectedclients');
 
