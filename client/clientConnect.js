@@ -7,9 +7,16 @@ const globals = require('../globals.js');
 
 // Define a function to handle a client connection
 function clientConnect(socket, io) {
+
+  globals.setGlobal('io', io);
+
   console.log("");
   console.log('A user connected.', socket.id);
 
+  // Send current time to the clinet
+  let timeleft = globals.getGlobal('timeleft');
+  socket.emit('timeleft', timeleft);
+  
   // Send treasure to frontend 
   let treasure = globals.getGlobal('treasure');
   socket.emit('treasureinit', treasure);

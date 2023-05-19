@@ -44,6 +44,9 @@ const setElement = require('./userData/setElement.js');
 // GENERATE TREASURE ON SERVER START
 require('./management/generateTreasure.js');
 
+// START TIMER
+require('./rounds/roundTimer.js')
+
 const scoreAdd = require('./score/scoreAdd.js');
 const clientUpdatePosition = require('./playerPosition/clientUpdatePosition.js');
 const clientUserAchievement = require('./client/clientUserAchievement.js');

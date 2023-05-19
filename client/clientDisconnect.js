@@ -8,6 +8,9 @@ const globals = require('../globals.js');
 
 // Define a function to handle a client disconnection
 function clientDisconnect(socket, io) {
+  
+  globals.setGlobal('io', io);
+
   console.log("");
   console.log('[clientDisconnect]: A user disconnected.');
 

@@ -3,6 +3,8 @@ const globals = {
   connectedclients: [], // A string list of all clients connected
   clients: [], // Array of all websocket clients
   leaderboard: 0, // leaderboard position 
+  io: [], // Socket.io
+  timeleft: 120000,
   treasure: [
     { "x": 0, "y": 50, "gem": "Emerald", "value": 10 },
     { "x": 0, "y": 100, "gem": "Emerald", "value": 10 },
