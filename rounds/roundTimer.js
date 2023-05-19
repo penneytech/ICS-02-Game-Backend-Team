@@ -10,14 +10,14 @@ function startTimer() {
 
         if (timeremaining == 0 && paused == false) {
             paused = true; // We're paused
-            timeremaining = 5000;
+            timeremaining = 10000;
             console.log("PAUSED")
             io.emit("timerpaused", paused); // Paused frontend
         }
 
         if (timeremaining == 0 && paused == true) {
             paused = false; // We're playing
-            timeremaining = 10000;
+            timeremaining = 300000;
             console.log("PLAYING");
             io.emit("timerpaused", paused); // Paused frontend
         }
