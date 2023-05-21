@@ -1,5 +1,6 @@
 const globals = require('../globals.js');
 const ingameleaderboard = require('./ingameleaderboard.js');
+const generateRandomPosition = require('../management/generateRandomPosition.js');
 
 function collisionScoreLogic(user, hit) {
 
@@ -90,26 +91,54 @@ function collisionScoreLogic(user, hit) {
         damage = 0.75;
     }
 
+    // Update the points of the winner and loser.
+    let io = globals.getGlobal('io');
+
     if (winner == player1) {
         console.log("Player 1 wins");
-        player2.points = player2.points - (maximumdamage * damage);
-        player1.points = player1.points + (maximumdamage * damage);
+        const pointsToSubtract = Math.min(player2.points, maximumdamage * damage);
+        player2.points -= pointsToSubtract;
+        player1.points += pointsToSubtract;
+
+        if (player2.points === 0) {
+            const position = generateRandomPosition(32, 32);
+            connectedclients[player2index].x = position.x;
+            connectedclients[player2index].y = position.y;
+
+            io.to(connectedclients[player2index].id).emit('clientspawn', {
+                x: position.x,
+                y: position.y,
+            });
+        }
     } else if (winner == player2) {
         console.log("Player 2 wins");
-        player1.points = player1.points - (maximumdamage * damage);
-        player2.points = player2.points + (maximumdamage * damage);
+        const pointsToSubtract = Math.min(player1.points, maximumdamage * damage);
+        player1.points -= pointsToSubtract;
+        player2.points += pointsToSubtract;
+
+        if (player1.points === 0) {
+            const position = generateRandomPosition(32, 32);
+            connectedclients[player1index].x = position.x;
+            connectedclients[player1index].y = position.y;
+
+            io.to(connectedclients[player1index].id).emit('clientspawn', {
+                x: position.x,
+                y: position.y,
+            });
+        }
     } else {
         console.log("Tie");
         return;
     }
 
+
     // Set the new scores for each player in the connectedclients array.
+
     connectedclients[player1index].currentscore = player1.points;
     connectedclients[player2index].currentscore = player2.points;
     console.log("Player1 Points", player1.points, "Player2 Points", player2.points);
 
     // Emit the new scores to each player
-    let io = globals.getGlobal('io');
     io.to(connectedclients[player1index].id).emit('myscore', player1.points);
     io.to(connectedclients[player2index].id).emit('myscore', player2.points);
 
