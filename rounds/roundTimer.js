@@ -5,21 +5,26 @@ let globals = require('../globals.js');
 
 function startTimer() {
 
-    setInterval(function() {
+    setInterval(function () {
         let io = globals.getGlobal('io');
 
-        if (timeremaining == 0 && paused == false) {
-            paused = true; // We're paused
-            timeremaining = 10000;
-            console.log("PAUSED")
-            io.emit("timerpaused", paused); // Paused frontend
-        }
+        try {
 
-        if (timeremaining == 0 && paused == true) {
-            paused = false; // We're playing
-            timeremaining = 300000;
-            console.log("PLAYING");
-            io.emit("timerpaused", paused); // Paused frontend
+            if (timeremaining == 0 && paused == false) {
+                paused = true; // We're paused
+                timeremaining = 10000;
+                console.log("PAUSED")
+                io.emit("timerpaused", paused); // Paused frontend
+            }
+
+            if (timeremaining == 0 && paused == true) {
+                paused = false; // We're playing
+                timeremaining = 300000;
+                console.log("PLAYING");
+                io.emit("timerpaused", paused); // Paused frontend
+            }
+        } catch (error) {
+            console.log(error);
         }
 
         timeremaining = timeremaining - 1000;

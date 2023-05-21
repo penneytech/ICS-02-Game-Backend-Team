@@ -1,4 +1,5 @@
 const globals = require('../globals.js');
+const collisionScoreLogic = require('../score/collisionScoreLogic.js');
 
 // Map to store hit reports from users
 const hitReports = new Map();
@@ -13,20 +14,14 @@ function hitOpponent(message, socket, io) {
 
   // Check if both users have hit each other
   if (hitReports.has(user) && hitReports.get(user) === hit) {
-    console.log(`${user} hit ${hit}`);
+    
     // Register the hit logic here
-
-let character = "Rogue";
-let element = "Water";
-let maxpointsremoved = 200;
-
+    collisionScoreLogic(user, hit);
       
-
     // Once the hit is registered, remove the hit reports from the map
     hitReports.delete(user);
-    hitReports.delete(hit);
+    hitReports.delete(hit); // Delete the entry for the opponent
   }
 }
-
 
 module.exports = hitOpponent;

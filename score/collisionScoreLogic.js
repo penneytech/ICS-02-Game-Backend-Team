@@ -1,0 +1,118 @@
+const globals = require('../globals.js');
+
+function collisionScoreLogic(user, hit) {
+
+    console.log(`collisionScoreLogic: ${user} hit ${hit}`);
+
+    let connectedclients = globals.getGlobal('connectedclients');
+
+    // Find each player in the connectedclients array.
+    let player1index = connectedclients.indexOf(connectedclients.find(client => client.username == user));
+    let player2index = connectedclients.indexOf(connectedclients.find(client => client.username == hit));
+    console.log("PlayerHit Indexes", player1index, player2index);
+
+    if (player1index == -1 || player2index == -1) {
+        console.log("Player not found in connectedclients array");
+        return;
+    }
+
+    // Calculate the logic for the hit (Sam C.)
+
+    const player1 = {
+        element: connectedclients[player1index].element,
+        character: connectedclients[player1index].character,
+        points: connectedclients[player1index].currentscore,
+    }
+
+    const player2 = {
+        element: connectedclients[player2index].element,
+        character: connectedclients[player2index].character,
+        points: connectedclients[player2index].currentscore,
+    }
+
+    console.log("Player1", player1)
+    console.log("Player2", player2)
+
+    let winner;
+    let damage;
+    let maximumdamage = 100;
+
+    if (player1.element == "Fire" && player2.element == "Water") {
+        winner = player2;
+    } else if (player1.element == "Fire" && player2.element == "Earth") {
+        winner = player1;
+    } else if (player1.element == "Fire" && player2.element == "Fire") {
+    } else if (player1.element == "Water" && player2.element == "Water") {
+    } else if (player1.element == "Water" && player2.element == "Fire") {
+        winner = player1;
+    } else if (player1.element == "Water" && player2.element == "Earth") {
+        winner = player2;
+    } else if (player1.element == "Earth" && player2.element == "Water") {
+        winner = player1;
+    } else if (player1.element == "Earth" && player2.element == "Fire") {
+        winner = player2;
+    } else if (player1.element == "Earth" && player2.element == "Earth") {
+    }
+
+
+    if (player1.character == "Archer" && player2.character == "Knight") {
+        damage = 0.25;
+    } else if (player1.character == "Archer" && player2.character == "Rogue") {
+        damage = 0.75;
+    } else if (player1.character == "Archer" && player2.character == "Mage") {
+        damage = 0.5;
+    } else if (player1.character == "Archer" && player2.character == "Archer") {
+        damage = 0;
+    } else if (player1.character == "Rogue" && player2.character == "Knight") {
+        damage = 0.5;
+    } else if (player1.character == "Rogue" && player2.character == "Rogue") {
+        damage = 0;
+    } else if (player1.character == "Rogue" && player2.character == "Mage") {
+        damage = 0.75;
+    } else if (player1.character == "Rogue" && player2.character == "Archer") {
+        damage = 0.25;
+    } else if (player1.character == "Mage" && player2.character == "Knight") {
+        damage = 0.75;
+    } else if (player1.character == "Mage" && player2.character == "Rogue") {
+        damage = 0.25;
+    } else if (player1.character == "Mage" && player2.character == "Mage") {
+        damage = 0;
+    } else if (player1.character == "Mage" && player2.character == "Archer") {
+        damage = 0.5;
+    } else if (player1.character == "Knight" && player2.character == "Knight") {
+        damage = 0;
+    } else if (player1.character == "Knight" && player2.character == "Rogue") {
+        damage = 0.5;
+    } else if (player1.character == "Knight" && player2.character == "Mage") {
+        damage = 0.25;
+    } else if (player1.character == "Knight" && player2.character == "Archer") {
+        damage = 0.75;
+    }
+
+    if (winner == player1) {
+        console.log("Player 1 wins");
+        player2.points = player2.points - (maximumdamage * damage);
+        player1.points = player1.points + (maximumdamage * damage);
+    } else if (winner == player2) {
+        console.log("Player 2 wins");
+        player1.points = player1.points - (maximumdamage * damage);
+        player2.points = player2.points + (maximumdamage * damage);
+    } else {
+        console.log("Tie");
+        return;
+    }
+
+    // Set the new scores for each player in the connectedclients array.
+    connectedclients[player1index].currentscore = player1.points;
+    connectedclients[player2index].currentscore = player2.points;
+    console.log("Player1 Points", player1.points, "Player2 Points", player2.points);
+
+    // Emit the new scores to each player
+    let io = globals.getGlobal('io');
+    io.to(connectedclients[player1index].id).emit('myscore', player1.points);
+    io.to(connectedclients[player2index].id).emit('myscore', player2.points);
+
+    globals.setGlobal('connectedclients', connectedclients);
+}
+
+module.exports = collisionScoreLogic;

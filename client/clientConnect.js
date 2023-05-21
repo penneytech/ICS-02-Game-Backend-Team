@@ -34,7 +34,7 @@ function clientConnect(socket, io) {
     x: 0,
     y: 0,
     currentscore: 0,
-    element: "water",
+    element: "Water",
     character: "Mage",
     // Any other client information here
   });

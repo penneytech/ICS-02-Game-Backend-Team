@@ -4,24 +4,27 @@ This code defines a function that handles a client login attempt.  When a client
 
 // Import the required functions and modules
 const globals = require("../globals.js");
-//const credentials = require("../credentials.json");
+const fs = require("fs");
 const clientSpawn = require("../playerPosition/clientSpawn.js");
 const sendPositions = require("../playerPosition/sendPositions.js");
-const clientCheckDoubleLogin = require('./clientCheckDoubleLogin.js') 
+const clientCheckDoubleLogin = require('./clientCheckDoubleLogin.js')
 const clientUserAchievement = require('./clientUserAchievement.js');
 const clientSendUserData = require('./clientSendUserData.js');
 // Define an object to keep track of logged in users
 const loggedInUsers = {};
 
 function clientLogin(data, socket, io) {
-  const credentials = require("../credentials.json");
+
+  // Read the contents of the credentials file
+  const credentialsData = fs.readFileSync('credentials.json');
+  const credentials = JSON.parse(credentialsData);
 
   console.log("");
 
-   if(clientCheckDoubleLogin(data, socket, io)) {
-       socket.emit("loginFailed", "You are already logged in!")
-       return;
-   }
+  if (clientCheckDoubleLogin(data, socket, io)) {
+    socket.emit("loginFailed", "You are already logged in!")
+    return;
+  }
 
   // Check if provided username and password match any of the default credentials
   const match = credentials.find(cred =>
@@ -31,7 +34,7 @@ function clientLogin(data, socket, io) {
 
   // If a match is found
   if (match) {
-    console.log("Successful login using default credentials! From", socket.id, match.username);
+    console.log("Successful login using default credentials! From", socket.id, match.username, match.element, match.character);
 
     // Send username to the client
     clientSendUserData(match, socket);
@@ -39,13 +42,13 @@ function clientLogin(data, socket, io) {
     // Send message to the client saying that login was successful
     socket.emit('loginSucceed');
 
-     // Call clientSpawn function to assign a random spawn point to the user
+    // Call clientSpawn function to assign a random spawn point to the user
     clientSpawn(data, socket, io);
-    
+
     // Send positions of all connected clients to the newly joined user
     sendPositions(socket, io);
 
-   
+
     clientUserAchievement(data, (userAchievement) => {
       socket.emit('loginSucceed', {
         user: data.username,
@@ -53,7 +56,7 @@ function clientLogin(data, socket, io) {
       });
       socket.emit('getUserAchievement', data.username);
     });
-    
+
     // Update the logged in users object to include the current user
     loggedInUsers[socket.id] = data.username;
 
@@ -64,10 +67,12 @@ function clientLogin(data, socket, io) {
     if (clientIndex !== -1) {
       console.log("[clientLogin]: Setting name:", socket.id + " - " + data.username);
       connectedclients[clientIndex].username = data.username;
+      connectedclients[clientIndex].element = match.element;
+      connectedclients[clientIndex].character = match.character;
     }
 
     // Emit the 'update' event to the 'frontendmonitor' room with the current list of user IDs
-   // console.log("[clientLogin]: Sending user ID's:", connectedclients);
+    // console.log("[clientLogin]: Sending user ID's:", connectedclients);
     io.to('frontendmonitor').emit('update', connectedclients);
 
   } else {
@@ -77,11 +82,11 @@ function clientLogin(data, socket, io) {
     // Send message to the client saying that login was unsuccessful
     socket.emit('loginFailed', 'Invalid username or password');
   }
-  
-// clientSpawn();
+
+  // clientSpawn();
 
 
-  
+
 }
 
 
