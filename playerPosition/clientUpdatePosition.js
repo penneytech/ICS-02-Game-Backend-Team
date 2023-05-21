@@ -18,7 +18,8 @@ function clientUpdatePosition(data, socket, io) {
         x: data.x,
         y: data.y,
         element: data.element,
-        character: data.character  
+        character: data.character, 
+        score: connectedclients[clientIndex].currentscore,
     });
 
     io.to('frontendmonitor').emit('update', connectedclients);

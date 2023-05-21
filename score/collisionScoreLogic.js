@@ -1,4 +1,5 @@
 const globals = require('../globals.js');
+const ingameleaderboard = require('./ingameleaderboard.js');
 
 function collisionScoreLogic(user, hit) {
 
@@ -111,6 +112,28 @@ function collisionScoreLogic(user, hit) {
     let io = globals.getGlobal('io');
     io.to(connectedclients[player1index].id).emit('myscore', player1.points);
     io.to(connectedclients[player2index].id).emit('myscore', player2.points);
+
+    // Emit the scores to everyone in the game
+
+    // Emit the new position to all clients
+    io.emit('clientupdateposition', {
+        username: connectedclients[player1index].username,
+        x: connectedclients[player1index].x,
+        y: connectedclients[player1index].y,
+        element: connectedclients[player1index].element,
+        character: connectedclients[player1index].character,
+        score: connectedclients[player1index].currentscore,
+    });
+    io.emit('clientupdateposition', {
+        username: connectedclients[player2index].username,
+        x: connectedclients[player2index].x,
+        y: connectedclients[player2index].y,
+        element: connectedclients[player2index].element,
+        character: connectedclients[player2index].character,
+        score: connectedclients[player2index].currentscore,
+    });
+
+    io.emit('ingameleaderboard', ingameleaderboard())
 
     globals.setGlobal('connectedclients', connectedclients);
 }
