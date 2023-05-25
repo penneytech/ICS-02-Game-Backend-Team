@@ -44,7 +44,9 @@ function collisionScoreLogic(user, hit) {
     } else if (player1.element == "Fire" && player2.element == "Earth") {
         winner = player1;
     } else if (player1.element == "Fire" && player2.element == "Fire") {
+
     } else if (player1.element == "Water" && player2.element == "Water") {
+
     } else if (player1.element == "Water" && player2.element == "Fire") {
         winner = player1;
     } else if (player1.element == "Water" && player2.element == "Earth") {
@@ -95,10 +97,11 @@ function collisionScoreLogic(user, hit) {
     let io = globals.getGlobal('io');
 
     if (winner == player1) {
-        console.log("Player 1 wins");
-        const pointsToSubtract = Math.min(player2.points, maximumdamage * damage);
-        player2.points -= pointsToSubtract;
+        console.log("Player 1 wins", player1.points, player2.points);
+        const pointsToSubtract = Math.min(player2.points, maximumdamage * (1 - damage));
         player1.points += pointsToSubtract;
+        player2.points -= pointsToSubtract;
+        console.log("Points to subtract", pointsToSubtract);
 
         if (player2.points === 0) {
             const position = generateRandomPosition(32, 32);
@@ -111,10 +114,11 @@ function collisionScoreLogic(user, hit) {
             });
         }
     } else if (winner == player2) {
-        console.log("Player 2 wins");
-        const pointsToSubtract = Math.min(player1.points, maximumdamage * damage);
+        console.log("Player 2 wins", player1.points, player2.points);
+        const pointsToSubtract = Math.min(player1.points, maximumdamage * (1 - damage));
         player1.points -= pointsToSubtract;
         player2.points += pointsToSubtract;
+        console.log("Points to subtract", pointsToSubtract);
 
         if (player1.points === 0) {
             const position = generateRandomPosition(32, 32);

@@ -9,21 +9,6 @@ const io = require('socket.io')(server, {
   }
 });
 const PORT = process.env.PORT || 3000;
-//app.use(cors());
-// app.use(cors({
-//   origin: 'http://127.0.0.1:3000'
-// }));
-
-// app.use(cors({
-//   origin: ['http://localhost:3000', 'http://127.0.0.1:3000']
-// }));
-
-// const io = require('socket.io')(server, {
-//   cors: {
-//     origin: ['http://localhost:5500', 'http://127.0.0.1:5500'],
-//     methods: ['GET', 'POST']
-//   }
-// });
 
 app.use(express.static('public'));
 
@@ -37,7 +22,6 @@ const clientDisconnect = require('./client/clientDisconnect.js');
 const leaderBoard = require('./userData/leaderboardPosition.js');
 const removingTreasure = require('./management/removingTreasure.js')
 const hitOpponent = require('./playerPosition/hitOpponent.js');
-
 const setCharacter = require('./userData/setCharacter.js');
 const setElement = require('./userData/setElement.js');
 
@@ -130,7 +114,7 @@ io.on('connection', (socket) => {
       io.to('user').emit(
         'message',
         'This is a test message from the server!');
-    }, 10000);
+    }, 3000);
   }
 });
 

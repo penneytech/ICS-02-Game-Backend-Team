@@ -14,6 +14,8 @@ function setElement(message, socket) {
     return;
   }
 
+  connectedclients[index].element = message;
+
   let tempusername = connectedclients[index].username;
   console.log('tempusername', tempusername);
 
@@ -21,6 +23,8 @@ function setElement(message, socket) {
     console.log('Client not logged in.');
     return;
   }
+
+  globals.setGlobal('connectedclients', connectedclients);
 
   // Read the credentials file
   const credentialsPath = path.join(__dirname, '../credentials.json');

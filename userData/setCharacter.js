@@ -9,10 +9,13 @@ function setCharacter(message, socket) {
 
   let index = connectedclients.findIndex(client => client.id === socket.id);
   console.log('index', index);
+
   if (index === -1) {
     console.log('Client not found in connectedclients array.');
     return;
   }
+
+  connectedclients[index].character = message;
 
   let tempusername = connectedclients[index].username;
   console.log('tempusername', tempusername);
@@ -21,6 +24,8 @@ function setCharacter(message, socket) {
     console.log('Client not logged in.');
     return;
   }
+
+  globals.setGlobal('connectedclients', connectedclients);
 
   // Read the credentials file
   const credentialsPath = path.join(__dirname, '../credentials.json');
