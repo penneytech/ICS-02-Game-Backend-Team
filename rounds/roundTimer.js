@@ -14,14 +14,14 @@ function startTimer() {
                 paused = true; // We're paused
                 timeremaining = 10000;
                 console.log("PAUSED")
-                io.emit("timerpaused", paused); // Paused frontend
+                io.emit("betweenrounds", true); // Paused frontend
             }
 
             if (timeremaining == 0 && paused == true) {
                 paused = false; // We're playing
-                timeremaining = 300000;
+                timeremaining = 120000;
                 console.log("PLAYING");
-                io.emit("timerpaused", paused); // Paused frontend
+                io.emit("betweenrounds", false); // Paused frontend
             }
         } catch (error) {
             console.log(error);
@@ -31,6 +31,7 @@ function startTimer() {
         globals.setGlobal('timeleft', timeremaining);
         // console.log(timeremaining);
     }, 1000);
+    
 }
 
 startTimer();

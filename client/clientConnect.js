@@ -17,6 +17,10 @@ function clientConnect(socket, io) {
   let timeleft = globals.getGlobal('timeleft');
   socket.emit('timeleft', timeleft);
   
+  // Send current round to the client
+  let betweenrounds = globals.getGlobal('betweenrounds');
+  socket.emit('betweenrounds', betweenrounds);
+  
   // Send treasure to frontend 
   let treasure = globals.getGlobal('treasure');
   socket.emit('treasureinit', treasure);
