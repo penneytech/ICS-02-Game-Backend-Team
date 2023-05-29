@@ -4,15 +4,14 @@ This code defines a function that handles a client disconnection from the server
 
 // Import the required functions from the 'globals.js' module
 const globals = require('../globals.js');
-//const scoreAdd = require('./scoreAdd.js');
 
 // Define a function to handle a client disconnection
 function clientDisconnect(socket, io) {
 
   globals.setGlobal('io', io);
 
-  console.log("");
-  console.log('[clientDisconnect]: A user disconnected.');
+  //console.log("");
+  //console.log('[clientDisconnect]: A user disconnected.');
 
   // Update list of connected clients
   let connectedclients = globals.getGlobal('connectedclients');
@@ -24,13 +23,13 @@ function clientDisconnect(socket, io) {
   if (index !== -1) {
     let connectedclients = globals.getGlobal('connectedclients');
 
-    console.log('[clientDisconnect]: Socket ID found!', socket.id)
+    //console.log('[clientDisconnect]: Socket ID found!', socket.id)
     // Log the updated list of connected clients to the console
     io.emit('removeopponent', connectedclients[index].username);
     // Remove the client from the array
     connectedclients.splice(index, 1);
   } else {
-    console.log('[clientDisconnect]: Socket ID not found!', socket.id)
+    //console.log('[clientDisconnect]: Socket ID not found!', socket.id)
     return;
   }
   const ingameleaderboard = require('../score/ingameleaderboard.js');
@@ -41,7 +40,7 @@ function clientDisconnect(socket, io) {
   globals.setGlobal('connectedclients', connectedclients);
 
   // Emit the 'update' event to the 'frontendmonitor' room with the current list of user IDs
-  // console.log("[clientIdentify]: Sending user ID's:", connectedclients);
+  // //console.log("[clientIdentify]: Sending user ID's:", connectedclients);
   io.to('frontendmonitor').emit('update', connectedclients);
 }
 

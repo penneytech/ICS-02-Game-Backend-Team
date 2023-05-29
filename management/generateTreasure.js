@@ -25,7 +25,7 @@ function generateTreasure(arrayLength) {
   }
 
   globals.setGlobal('treasure', result);  
-    console.log(result)
+    //console.log(result)
 }
 
 generateTreasure(50);  // Generate 50 new treasures and save the result to the 'treasure' global variable

@@ -16,7 +16,7 @@ setInterval(() => {
   // Write the updated credentials array back to the file
   fs.writeFileSync(credentialsPath, JSON.stringify(credentials, null, 2));
 
-  console.log('Reset numberloginattempts for all users');
+  //console.log('Reset numberloginattempts for all users');
 }, 1 * 30 * 1000);
 
 }

@@ -9,8 +9,8 @@ const clientLogin = require('./clientLogin.js')
 
 // Define a function to handle messages received from clients
 function clientMessage(data, socket, io) {
-    console.log("");
-    console.log('[clientMessage]: Received message:', data);
+    //console.log("");
+    //console.log('[clientMessage]: Received message:', data);
 
     // Send the message to all connected clients
     io.emit('message', "Test message");

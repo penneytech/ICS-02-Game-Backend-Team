@@ -19,7 +19,7 @@ function clientLogin(data, socket, io) {
   const credentialsData = fs.readFileSync('credentials.json');
   const credentials = JSON.parse(credentialsData);
 
-  console.log("");
+  //console.log("");
 
   if (clientCheckDoubleLogin(data, socket, io)) {
     socket.emit("loginFailed", "You are already logged in!")
@@ -34,7 +34,7 @@ function clientLogin(data, socket, io) {
 
   // If a match is found
   if (match) {
-    console.log("Successful login using default credentials! From", socket.id, match.username, match.element, match.character);
+    //console.log("Successful login using default credentials! From", socket.id, match.username, match.element, match.character);
 
     // Send username to the client
     clientSendUserData(match, socket);
@@ -63,21 +63,21 @@ function clientLogin(data, socket, io) {
     // Update the random connectedclient to include the user name of the logged in user
     let connectedclients = globals.getGlobal("connectedclients");
     const clientIndex = connectedclients.findIndex(client => client.id === socket.id);
-    //console.log("[clientLogin]: Client index:", clientIndex);
+    ////console.log("[clientLogin]: Client index:", clientIndex);
     if (clientIndex !== -1) {
-      console.log("[clientLogin]: Setting name:", socket.id + " - " + data.username);
+      //console.log("[clientLogin]: Setting name:", socket.id + " - " + data.username);
       connectedclients[clientIndex].username = data.username;
       connectedclients[clientIndex].element = match.element;
       connectedclients[clientIndex].character = match.character;
     }
 
     // Emit the 'update' event to the 'frontendmonitor' room with the current list of user IDs
-    // console.log("[clientLogin]: Sending user ID's:", connectedclients);
+    // //console.log("[clientLogin]: Sending user ID's:", connectedclients);
     io.to('frontendmonitor').emit('update', connectedclients);
 
   } else {
     // No match was found
-    console.log(socket.id, "Invalid username or password");
+    //console.log(socket.id, "Invalid username or password");
 
     // Send message to the client saying that login was unsuccessful
     socket.emit('loginFailed', 'Invalid username or password');

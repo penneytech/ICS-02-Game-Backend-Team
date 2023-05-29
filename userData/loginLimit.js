@@ -2,7 +2,7 @@ const fs = require("fs");
 const credentials = require("../credentials.json");
 
 function loginLimit(data, socket, io) {
-  console.log("attempted login:", data.username, data.password);
+  //console.log("attempted login:", data.username, data.password);
 
   // Find the user in the credentials array
   const userIndex = credentials.findIndex((user) => user.username === data.username);
@@ -11,7 +11,7 @@ function loginLimit(data, socket, io) {
   if (userIndex !== -1) {
     // Check if the password matches
     if (credentials[userIndex].password === data.password) {
-      console.log("Login successful for user:", data.username);
+      //console.log("Login successful for user:", data.username);
 
       // Update the last login date and number of login attempts for the user
       credentials[userIndex].lastlogindate = new Date().toISOString();
@@ -22,16 +22,16 @@ function loginLimit(data, socket, io) {
         if (err) {
           console.error(err);
         } else {
-          console.log("Updated credentials.json with login data for user:", data.username);
+          //console.log("Updated credentials.json with login data for user:", data.username);
         }
       });
     } else {
-      console.log("Invalid password for user:", data.username);
+      //console.log("Invalid password for user:", data.username);
       // Increment the number of login attempts for the user in credentials.json
       incrementLoginAttempts(data.username);
     }
   } else {
-    console.log("User not found:", data.username);
+    //console.log("User not found:", data.username);
   }
 }
 
@@ -52,11 +52,11 @@ function incrementLoginAttempts(username) {
       if (err) {
         console.error(err);
       } else {
-        console.log("Updated credentials.json with login attempt data for user:", username);
+        //console.log("Updated credentials.json with login attempt data for user:", username);
       }
     });
   } else {
-    console.log("User not found:", username);
+    //console.log("User not found:", username);
   }
 }
 

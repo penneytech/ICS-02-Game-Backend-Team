@@ -3,7 +3,7 @@ const ingameleaderboard = require('./ingameleaderboard.js');
 
 function clientScore(message, socket, io) {
 
-  console.log("clientScore.js", message, socket.id, "socket.id")
+  //console.log("clientScore.js", message, socket.id, "socket.id")
   
   let connectedclients = globals.getGlobal('connectedclients');
 

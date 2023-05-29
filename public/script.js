@@ -46,7 +46,7 @@ function renderPlayers(players) {
 
 // On initial connection
 socket.on("connect", () => {
-    console.log("Connected to server");
+    //console.log("Connected to server");
 
     // Identify with the backend server as "frontendmonitor"
     socket.emit("ident", "frontendmonitor");
@@ -60,7 +60,7 @@ socket.on("connect", () => {
 
 // When a new client list is received
 socket.on("update", (data) => {
-    console.log("Received client from server", data);
+    //console.log("Received client from server", data);
 
     // Get the client data
     let connectedClients = data;
@@ -116,5 +116,5 @@ socket.on("update", (data) => {
 
 // On disconnect
 socket.on("disconnect", () => {
-    console.log("Disconnected from server");
+    //console.log("Disconnected from server");
 });

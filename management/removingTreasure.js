@@ -4,7 +4,7 @@ const clientScore = require('../score/clientScore.js');
 
 function removingTreasure(treasureindex, socket, io) {
 
-    console.log("gem collected", treasureindex, socket.id);
+    //console.log("gem collected", treasureindex, socket.id);
 
     // Add to the client's score
     let treasurevalue = globals.getGlobal('treasure')[treasureindex].value;

@@ -1,7 +1,7 @@
 let timeremaining = 10000;
 let paused = false;
-
 let globals = require('../globals.js');
+let scoreAdd = require('../score/scoreAdd.js');
 
 function startTimer() {
 
@@ -13,23 +13,27 @@ function startTimer() {
             if (timeremaining == 0 && paused == false) {
                 paused = true; // We're paused
                 timeremaining = 10000;
-                console.log("PAUSED")
+                //console.log("PAUSED")
+                globals.setGlobal('betweenrounds', true);
                 io.emit("betweenrounds", true); // Paused frontend
+                scoreAdd();
             }
 
             if (timeremaining == 0 && paused == true) {
+                
                 paused = false; // We're playing
                 timeremaining = 120000;
-                console.log("PLAYING");
+                //console.log("PLAYING");
+                globals.setGlobal('betweenrounds', false);
                 io.emit("betweenrounds", false); // Paused frontend
             }
         } catch (error) {
-            console.log(error);
+            //console.log(error);
         }
 
         timeremaining = timeremaining - 1000;
         globals.setGlobal('timeleft', timeremaining);
-        // console.log(timeremaining);
+        // //console.log(timeremaining);
     }, 1000);
     
 }

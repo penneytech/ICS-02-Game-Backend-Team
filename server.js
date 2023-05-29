@@ -24,6 +24,7 @@ const removingTreasure = require('./management/removingTreasure.js')
 const hitOpponent = require('./playerPosition/hitOpponent.js');
 const setCharacter = require('./userData/setCharacter.js');
 const setElement = require('./userData/setElement.js');
+const getUserStats = require('./management/getUserStats.js')
 
 // GENERATE TREASURE ON SERVER START
 require('./management/generateTreasure.js');
@@ -63,13 +64,13 @@ io.on('connection', (socket) => {
 
   // Handles user data position
   socket.on('updateposition', (data) => {
-    //console.log(`Received player position: ${JSON.stringify(data)}`);
+    ////console.log(`Received player position: ${JSON.stringify(data)}`);
     clientUpdatePosition(data, socket, io);
   });
 
   // Setting character
   socket.on('characterselect', (message) => {
-    console.log("characterselect", message);
+    //console.log("characterselect", message);
     setCharacter(message, socket);
   });
 
@@ -90,18 +91,13 @@ io.on('connection', (socket) => {
     clientDisconnect(socket, io);
   });
 
-
-  // // Handle End of Round
-  // socket.on('roundEnd', () => {
-  //   let connectedclients = globals.getGlobal('connectedclients');
-  //   connectedclients.forEach(client => {
-  //     scoreAdd(client.username, client.currentscore);
-  //   });
-  // });
+  socket.on('userstats', (message) => {
+    socket.emit('userstatsdata', getUserStats(message))
+  });
 
   // Handle client requests for user achievement
   socket.on('getUserAchievement', (username) => {
-    console.log('[Server]: Received getUserAchievement request for user:', username);
+    //console.log('[Server]: Received getUserAchievement request for user:', username);
     const userAchievement = clientUserAchievement({ username: username });
     // Emit the user achievement data back to the client
     socket.emit('userAchievement', userAchievement);
@@ -110,7 +106,7 @@ io.on('connection', (socket) => {
   // Start sending test messages to all clients in the 'users' room
   if (!intervalID) {
     intervalID = setInterval(() => {
-      //console.log("Test message sent to users")
+      ////console.log("Test message sent to users")
       io.to('user').emit(
         'message',
         'This is a test message from the server!');
@@ -119,7 +115,7 @@ io.on('connection', (socket) => {
 });
 
 server.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+  //console.log(`Server is running on port ${PORT}`);
 });
 
 leaderBoard();

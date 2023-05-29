@@ -4,17 +4,17 @@ const generateRandomPosition = require('../management/generateRandomPosition.js'
 
 function collisionScoreLogic(user, hit) {
 
-    console.log(`collisionScoreLogic: ${user} hit ${hit}`);
+    //console.log(`collisionScoreLogic: ${user} hit ${hit}`);
 
     let connectedclients = globals.getGlobal('connectedclients');
 
     // Find each player in the connectedclients array.
     let player1index = connectedclients.indexOf(connectedclients.find(client => client.username == user));
     let player2index = connectedclients.indexOf(connectedclients.find(client => client.username == hit));
-    console.log("PlayerHit Indexes", player1index, player2index);
+    //console.log("PlayerHit Indexes", player1index, player2index);
 
     if (player1index == -1 || player2index == -1) {
-        console.log("Player not found in connectedclients array");
+        //console.log("Player not found in connectedclients array");
         return;
     }
 
@@ -32,8 +32,8 @@ function collisionScoreLogic(user, hit) {
         points: connectedclients[player2index].currentscore,
     }
 
-    console.log("Player1", player1)
-    console.log("Player2", player2)
+    //console.log("Player1", player1)
+    //console.log("Player2", player2)
 
     let winner;
     let damage;
@@ -97,11 +97,11 @@ function collisionScoreLogic(user, hit) {
     let io = globals.getGlobal('io');
 
     if (winner == player1) {
-        console.log("Player 1 wins", player1.points, player2.points);
+        //console.log("Player 1 wins", player1.points, player2.points);
         const pointsToSubtract = Math.min(player2.points, maximumdamage * (1 - damage));
         player1.points += pointsToSubtract;
         player2.points -= pointsToSubtract;
-        console.log("Points to subtract", pointsToSubtract);
+        //console.log("Points to subtract", pointsToSubtract);
 
         if (player2.points === 0) {
             const position = generateRandomPosition(32, 32);
@@ -114,11 +114,11 @@ function collisionScoreLogic(user, hit) {
             });
         }
     } else if (winner == player2) {
-        console.log("Player 2 wins", player1.points, player2.points);
+        //console.log("Player 2 wins", player1.points, player2.points);
         const pointsToSubtract = Math.min(player1.points, maximumdamage * (1 - damage));
         player1.points -= pointsToSubtract;
         player2.points += pointsToSubtract;
-        console.log("Points to subtract", pointsToSubtract);
+        //console.log("Points to subtract", pointsToSubtract);
 
         if (player1.points === 0) {
             const position = generateRandomPosition(32, 32);
@@ -131,7 +131,7 @@ function collisionScoreLogic(user, hit) {
             });
         }
     } else {
-        console.log("Tie");
+        //console.log("Tie");
         return;
     }
 
@@ -140,7 +140,7 @@ function collisionScoreLogic(user, hit) {
 
     connectedclients[player1index].currentscore = player1.points;
     connectedclients[player2index].currentscore = player2.points;
-    console.log("Player1 Points", player1.points, "Player2 Points", player2.points);
+    //console.log("Player1 Points", player1.points, "Player2 Points", player2.points);
 
     // Emit the new scores to each player
     io.to(connectedclients[player1index].id).emit('myscore', player1.points);

@@ -23,7 +23,7 @@ function generateRandomPosition(tileWidth, tileHeight) {
         //if (!occupiedPositions.some(pos => pos.x === x && pos.y === y)) {
             return { x, y };
         //} else {
-          //  console.log("POSITION ALREADY TAKEN");
+          //  //console.log("POSITION ALREADY TAKEN");
         //}
    // }
 }

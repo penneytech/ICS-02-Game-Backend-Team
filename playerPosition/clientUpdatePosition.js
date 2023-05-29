@@ -1,7 +1,7 @@
 const globals = require("../globals.js");
 
 function clientUpdatePosition(data, socket, io) {
-//console.log("clientUpdatePosition.js", data)
+////console.log("clientUpdatePosition.js", data)
     let connectedclients = globals.getGlobal('connectedclients');
     const clientIndex = connectedclients.findIndex(client => client.id === socket.id);
 

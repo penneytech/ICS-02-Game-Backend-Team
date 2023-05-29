@@ -10,17 +10,17 @@ function clientConnect(socket, io) {
 
   globals.setGlobal('io', io);
 
-  console.log("");
-  console.log('A user connected.', socket.id);
+  //console.log("");
+  //console.log('A user connected.', socket.id);
+
+  // Send current round to the client
+  let betweenrounds = globals.getGlobal('betweenrounds');
+  socket.emit('betweenrounds', betweenrounds);
 
   // Send current time to the clinet
   let timeleft = globals.getGlobal('timeleft');
   socket.emit('timeleft', timeleft);
-  
-  // Send current round to the client
-  let betweenrounds = globals.getGlobal('betweenrounds');
-  socket.emit('betweenrounds', betweenrounds);
-  
+
   // Send treasure to frontend 
   let treasure = globals.getGlobal('treasure');
   socket.emit('treasureinit', treasure);
@@ -44,7 +44,7 @@ function clientConnect(socket, io) {
   });
 
   // Log the list of connected clients to the console
-  //console.log('Connected clients:', connectedclients);
+  ////console.log('Connected clients:', connectedclients);
   io.to('frontendmonitor').emit('update', connectedclients);
 
   // Update the global variable with the updated array

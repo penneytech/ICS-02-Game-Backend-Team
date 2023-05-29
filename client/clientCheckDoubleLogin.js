@@ -12,12 +12,12 @@ function clientCheckDoubleLogin(data, socket, io) {
     let match;
 
     if (index !== -1) {
-        console.log(`Index of "${data.username}" is ${index}`);
+        //console.log(`Index of "${data.username}" is ${index}`);
         // do something when index is found
         match = true;
         return true;
     } else {
-        console.log(`"${data.username}" not found`);
+        //console.log(`"${data.username}" not found`);
         // do something when index is not found
         match = false;
         return false;

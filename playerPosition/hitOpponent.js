@@ -5,7 +5,7 @@ const collisionScoreLogic = require('../score/collisionScoreLogic.js');
 const hitReports = new Map();
 
 function hitOpponent(message, socket, io) {
-  console.log('hitOpponent.js', message);
+  //console.log('hitOpponent.js', message);
 
   const { user, hit } = message;
 

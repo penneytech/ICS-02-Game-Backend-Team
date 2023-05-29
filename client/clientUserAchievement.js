@@ -5,13 +5,13 @@ const credentials = require("../credentials.json");
 
 // Define function to handle user achievement messages
 function clientUserAchievement(data) {
-   // console.log('[ClientUserAchievement]: Running...', credentials)
+   // //console.log('[ClientUserAchievement]: Running...', credentials)
 
     //const username = 'honeydew';
 
     const userAchievement = findUserAchievement(credentials, data.username);
 
-    console.log(userAchievement); // --> { "score": 1000 }
+    //console.log(userAchievement); // --> { "score": 1000 }
     
     return userAchievement;
 }
@@ -27,7 +27,7 @@ function findUserAchievement(array, username) {
     }
 
     if (Object.keys(foundUser).length === 0) {
-        console.log(`Username '${username}' does not exist in the array.`);
+        //console.log(`Username '${username}' does not exist in the array.`);
         return;
     }
 

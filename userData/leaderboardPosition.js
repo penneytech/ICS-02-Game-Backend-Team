@@ -23,7 +23,7 @@ function leaderBoard() {
 
 let leaderboard = JSON.stringify(leaderBoard());
 
-console.log("leaderboard order " + leaderboard);
+//console.log("leaderboard order " + leaderboard);
 
 setGlobal('leaderboard', leaderboard);
 module.exports = leaderBoard;
