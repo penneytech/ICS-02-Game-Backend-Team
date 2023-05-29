@@ -32,7 +32,6 @@ require('./management/generateTreasure.js');
 // START TIMER
 require('./rounds/roundTimer.js')
 
-const scoreAdd = require('./score/scoreAdd.js');
 const clientUpdatePosition = require('./playerPosition/clientUpdatePosition.js');
 const clientUserAchievement = require('./client/clientUserAchievement.js');
 
@@ -87,7 +86,6 @@ io.on('connection', (socket) => {
 
   // Handle Client Disconnections
   socket.on('disconnect', () => {
-    scoreAdd(socket);
     clientDisconnect(socket, io);
   });
 
