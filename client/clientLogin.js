@@ -43,7 +43,7 @@ function clientLogin(data, socket, io) {
     socket.emit('loginSucceed');
 
     // Call clientSpawn function to assign a random spawn point to the user
-    clientSpawn(data, socket, io);
+    clientSpawn(socket);
 
     // Send positions of all connected clients to the newly joined user
     sendPositions(socket, io);

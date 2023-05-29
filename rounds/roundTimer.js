@@ -2,6 +2,7 @@ let timeremaining = 10000;
 let paused = false;
 let globals = require('../globals.js');
 let scoreAdd = require('../score/scoreAdd.js');
+let clientSpawn = require('../playerPosition/clientSpawn.js');
 
 function startTimer() {
 
@@ -30,6 +31,12 @@ function startTimer() {
                 // Set everyone's score to 0.
                 io.emit("resetscore");
                 io.emit('ingameleaderboard', []);
+
+                // Iterate through all connected sockets
+                io.sockets.sockets.forEach((socket) => {
+                    clientSpawn(socket);
+                });
+
             }
         } catch (error) {
             //console.log(error);

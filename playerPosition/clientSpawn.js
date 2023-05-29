@@ -1,9 +1,9 @@
 const globals = require("../globals.js");
 const generateRandomPosition = require('../management/generateRandomPosition.js');
 
-function clientSpawn(data, socket, io) {
+function clientSpawn(socket) {
+  console.log("clientSpawn called")
 
-  ////console.log("clientSpawn.js", data)
   let connectedclients = globals.getGlobal('connectedclients');
   const clientIndex = connectedclients.findIndex(client => client.id === socket.id);
 
@@ -20,6 +20,11 @@ function clientSpawn(data, socket, io) {
     x: connectedclients[clientIndex].x,
     y: connectedclients[clientIndex].y
   });
+
+  console.log('socket emit', {
+    x: connectedclients[clientIndex].x,
+    y: connectedclients[clientIndex].y
+  })
 
 }
 
