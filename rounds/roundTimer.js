@@ -20,12 +20,16 @@ function startTimer() {
             }
 
             if (timeremaining == 0 && paused == true) {
-                
+
+
                 paused = false; // We're playing
                 timeremaining = 120000;
                 //console.log("PLAYING");
                 globals.setGlobal('betweenrounds', false);
                 io.emit("betweenrounds", false); // Paused frontend
+                // Set everyone's score to 0.
+                io.emit("resetscore");
+                io.emit('ingameleaderboard', []);
             }
         } catch (error) {
             //console.log(error);
@@ -35,7 +39,7 @@ function startTimer() {
         globals.setGlobal('timeleft', timeremaining);
         // //console.log(timeremaining);
     }, 1000);
-    
+
 }
 
 startTimer();

@@ -76,7 +76,11 @@ function scoreAdd() {
         console.error('Error parsing credentials file:', err);
       }
     });
+
+    client.currentscore = 0;
   });
+
+  globals.setGlobal('connectedclients', connectedClients); 
 }
 
 module.exports = scoreAdd;
