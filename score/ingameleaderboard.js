@@ -6,10 +6,10 @@ function ingameleaderboard() {
     // Sort the array by score
     connectedclients.sort((a, b) => b.currentscore - a.currentscore);
     
-    // Return the top 10 objects with username and score properties
+    // Return the top 5 objects with username and score properties
     return connectedclients
         .filter(client => client.username && client.username !== 'frontendmonitor')
-        .slice(0, 10)
+        .slice(0, 5)
         .map(({ username, currentscore }) => ({ username, score: currentscore }));
 }
 
