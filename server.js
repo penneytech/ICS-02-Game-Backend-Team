@@ -1,8 +1,9 @@
 const globals = require('./globals.js');
 const { MongoClient } = require("mongodb");
+require('dotenv').config(); // Load environment variables from .env file
 
 // MongoDB setup
-const uri = "mongodb+srv://ICS3U01:burlingtoncentralics3u@ics3u01.ckxzf5i.mongodb.net/game2?retryWrites=true&w=majority"; // replace with your connection string
+const uri = process.env.MONGODB_URI;
 const client = new MongoClient(uri);
 
 globals.setGlobal('mongoDbClient', client);
