@@ -1,38 +1,23 @@
-// Import required modules and functions
-const globals = require('../globals.js');
-const clientIdentify = require('./clientIdentify.js');
-const credentials = require("../credentials.json");
+// const globals = require('../globals.js');
 
-// Define function to handle user achievement messages
-function clientUserAchievement(data) {
-   // //console.log('[ClientUserAchievement]: Running...', credentials)
+// async function clientUserAchievement(data) {
+//     console.log('[ClientUserAchievement]: Running...')
 
-    //const username = 'honeydew';
+//     try {
+//         const client = globals.getGlobal('mongoDbClient');
+//         const collection = client.db("game2").collection("game2"); // your DB and collection names
 
-    const userAchievement = findUserAchievement(credentials, data.username);
+//         const user = await collection.findOne({ username: data.username });
 
-    //console.log(userAchievement); // --> { "score": 1000 }
-    
-    return userAchievement;
-}
+//         if (!user) {
+//             throw new Error(`Username '${data.username}' does not exist in the database.`);
+//         }
 
-function findUserAchievement(array, username) {
-    let foundUser = {};
+//         return user.userachievement;
+//     } catch (error) {
+//         console.error('Error fetching user achievement:', error.message);
+//         return null;
+//     }
+// }
 
-    for (let i = 0; i < array.length; i++) {
-        if (array[i].username === username) {
-            foundUser = array[i];
-            break;
-        }
-    }
-
-    if (Object.keys(foundUser).length === 0) {
-        //console.log(`Username '${username}' does not exist in the array.`);
-        return;
-    }
-
-    return foundUser.userachievement;
-}
-
-// Export the function for use in other modules
-module.exports = clientUserAchievement;
+// module.exports = clientUserAchievement;

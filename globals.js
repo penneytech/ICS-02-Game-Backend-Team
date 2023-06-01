@@ -3,7 +3,7 @@ const globals = {
   connectedclients: [], // A string list of all clients connected
   betweenrounds: false, // Boolean to indicate if we're between rounds
   clients: [], // Array of all websocket clients
-  leaderboard: 0, // leaderboard position 
+  leaderboard: [], // leaderboard data 
   io: [], // Socket.io
   timeleft: 120000,
   treasure: [
@@ -15,6 +15,7 @@ const globals = {
     { "x": 0, "y": 300, "gem": "Emerald", "value": 10 },
     { "x": 0, "y": 350, "gem": "Emerald",   "value": 10 },
   ],
+  mongoDbClient: [],
 }
 
 // Define a function to set a global variable

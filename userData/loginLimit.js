@@ -1,63 +1,54 @@
-const fs = require("fs");
-const credentials = require("../credentials.json");
+// const globals = require("../globals.js");
 
-function loginLimit(data, socket, io) {
-  //console.log("attempted login:", data.username, data.password);
+// async function loginLimit(data, socket, io) {
+//   const client = globals.getGlobal('mongoDbClient');
+//   const collection = client.db("game2").collection("game2"); // replace with your DB and collection names
 
-  // Find the user in the credentials array
-  const userIndex = credentials.findIndex((user) => user.username === data.username);
+//   const user = await collection.findOne({ username: data.username });
+  
+//   // If the user is found
+//   if (user) {
+//     // Check if the password matches
+//     if (user.password === data.password) {
+//       console.log("Login successful for user:", data.username);
 
-  // If the user is found
-  if (userIndex !== -1) {
-    // Check if the password matches
-    if (credentials[userIndex].password === data.password) {
-      //console.log("Login successful for user:", data.username);
+//       // Update the last login date and number of login attempts for the user
+//       await collection.updateOne(
+//         { username: data.username },
+//         {
+//           $set: {
+//             lastlogindate: new Date().toISOString(),
+//             numberloginattempts: user.numberloginattempts + 1
+//           }
+//         }
+//       );
+//     } else {
+//       console.log("Invalid password for user:", data.username);
+//       await incrementLoginAttempts(data.username, collection);
+//     }
+//   } else {
+//     console.log("User not found:", data.username);
+//   }
+// }
 
-      // Update the last login date and number of login attempts for the user
-      credentials[userIndex].lastlogindate = new Date().toISOString();
-      credentials[userIndex].numberloginattempts += 1; // Increment the login attempt count
+// async function incrementLoginAttempts(username, collection) {
+//   const user = await collection.findOne({ username: username });
 
-      // Write the updated credentials array to the credentials.json file
-      fs.writeFile("credentials.json", JSON.stringify(credentials, null, 2), (err) => {
-        if (err) {
-          console.error(err);
-        } else {
-          //console.log("Updated credentials.json with login data for user:", data.username);
-        }
-      });
-    } else {
-      //console.log("Invalid password for user:", data.username);
-      // Increment the number of login attempts for the user in credentials.json
-      incrementLoginAttempts(data.username);
-    }
-  } else {
-    //console.log("User not found:", data.username);
-  }
-}
+//   // If the user is found
+//   if (user) {
+//     // Increment the login attempt count
+//     await collection.updateOne(
+//       { username: username },
+//       {
+//         $set: {
+//           lastlogindate: new Date().toISOString(),
+//           numberloginattempts: user.numberloginattempts + 1
+//         }
+//       }
+//     );
+//   } else {
+//     console.log("User not found:", username);
+//   }
+// }
 
-function incrementLoginAttempts(username) {
-  // Find the user in the credentials array
-  const userIndex = credentials.findIndex((user) => user.username === username);
-
-  // If the user is found
-  if (userIndex !== -1) {
-    // Increment the login attempt count
-    credentials[userIndex].numberloginattempts += 1;
-
-    // Update the last login date for the user
-    credentials[userIndex].lastlogindate = new Date().toISOString();
-
-    // Write the updated credentials array to the credentials.json file
-    fs.writeFile("credentials.json", JSON.stringify(credentials, null, 2), (err) => {
-      if (err) {
-        console.error(err);
-      } else {
-        //console.log("Updated credentials.json with login attempt data for user:", username);
-      }
-    });
-  } else {
-    //console.log("User not found:", username);
-  }
-}
-
-module.exports = loginLimit;
+// module.exports = loginLimit;

@@ -3,6 +3,7 @@ let paused = false;
 let globals = require('../globals.js');
 let scoreAdd = require('../score/scoreAdd.js');
 let clientSpawn = require('../playerPosition/clientSpawn.js');
+let leaderBoard = require('../userData/leaderboardPosition.js');
 
 function startTimer() {
 
@@ -21,7 +22,7 @@ function startTimer() {
             }
 
             if (timeremaining == 0 && paused == true) {
-
+                leaderBoard();
 
                 paused = false; // We're playing
                 timeremaining = 120000;

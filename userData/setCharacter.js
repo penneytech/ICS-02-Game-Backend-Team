@@ -1,71 +1,46 @@
-const fs = require('fs');
-const path = require('path');
 const globals = require('../globals.js');
 
-function setCharacter(message, socket) {
-  //console.log('Setting character for connected client:', socket.id, message);
+async function setCharacter(message, socket) {
+  console.log('Setting character for connected client:', socket.id, message);
 
-  let connectedclients = globals.getGlobal('connectedclients');
+  let connectedClients = globals.getGlobal('connectedclients');
 
-  let index = connectedclients.findIndex(client => client.id === socket.id);
-  //console.log('index', index);
+  let index = connectedClients.findIndex(client => client.id === socket.id);
+  console.log('index', index);
 
   if (index === -1) {
-    //console.log('Client not found in connectedclients array.');
+    console.log('Client not found in connectedclients array.');
     return;
   }
 
-  connectedclients[index].character = message;
+  connectedClients[index].character = message;
 
-  let tempusername = connectedclients[index].username;
-  //console.log('tempusername', tempusername);
+  let tempUsername = connectedClients[index].username;
+  console.log('tempusername', tempUsername);
 
-  if (tempusername === '' || tempusername === 'frontendmonitor') {
-    //console.log('Client not logged in.');
+  if (tempUsername === '' || tempUsername === 'frontendmonitor') {
+    console.log('Client not logged in.');
     return;
   }
 
-  globals.setGlobal('connectedclients', connectedclients);
+  globals.setGlobal('connectedclients', connectedClients);
 
-  // Read the credentials file
-  const credentialsPath = path.join(__dirname, '../credentials.json');
-  fs.readFile(credentialsPath, 'utf8', (err, data) => {
-    if (err) {
-      console.error('Error reading credentials file:', err);
-      return;
+  const client = globals.getGlobal('mongoDbClient');
+  const collection = client.db("game2").collection("game2"); // replace with your DB and collection names
+
+  try {
+    const result = await collection.updateOne(
+      { username: tempUsername },
+      { $set: { character: message } }
+    );
+    if (result.matchedCount > 0) {
+      console.log('Character set for the connected client and updated in MongoDB successfully.');
+    } else {
+      console.log('User not found in MongoDB.');
     }
-
-    try {
-      // Parse the JSON data
-      const credentials = JSON.parse(data);
-      ////console.log("CREDENTIALS", credentials);
-
-      // Find the user object that corresponds to the client
-      const user = credentials.find(user => user.username === tempusername);
-
-      if (user) {
-        // Set the character for the user
-        user.character = message;
-
-        // Convert the updated credentials object back to JSON
-        const updatedData = JSON.stringify(credentials, null, 2);
-
-        // Write the updated data back to the credentials file
-        fs.writeFile(credentialsPath, updatedData, 'utf8', err => {
-          if (err) {
-            console.error('Error writing credentials file:', err);
-            return;
-          }
-
-          //console.log('Character set for the connected client and updated in credentials file successfully.');
-        });
-      } else {
-        //console.log('User not found in credentials file.');
-      }
-    } catch (err) {
-      console.error('Error parsing credentials file:', err);
-    }
-  });
+  } catch (err) {
+    console.error('Error updating character in MongoDB:', err);
+  }
 }
 
 module.exports = setCharacter;
