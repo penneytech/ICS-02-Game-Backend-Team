@@ -1,0 +1,274 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Monda&family=Press+Start+2P&display=swap');
+
+html,
+body {
+  height: 100%;
+  width: 100%;
+  margin: 0px;
+  text-align: center;
+  font-family: 'Monda';
+  text-shadow: 10px 5px 10px #a478c2;
+  /* #422457; */
+  background-image: url("back2.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+}
+
+td {
+  background-color: #a478c2;
+  padding: 10px;
+  font-weight: bold;
+  text-shadow: none;
+  box-shadow: 10px 5px 5px #422457;
+}
+
+#title {
+  opacity: 1;
+  font-size: 20px;
+  font-family: "Press Start 2P";
+  line-height: 30px;
+  color: white;
+  margin: 30px;
+  margin-top: 50px;
+  display: flex;
+  justify-content: center;
+  flex: 1;
+}
+
+#subtitle {
+  opacity: 1;
+  font-size: 12px;
+  font-family: "Press Start 2P";
+  line-height: 30px;
+  color: white;
+  margin: 30px;
+  margin-top: 50px;
+  display: flex;
+  justify-content: center;
+  flex: 1;
+}
+
+#content {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+#popup {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 9999;
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+#popup-inner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 20px;
+  border: 2px solid black;
+  background-color: white;
+  box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.5);
+  align-items: center;
+  justify-content: center;
+  overflow-y: auto;
+  max-height: 80vh;
+  max-width: 600px;
+  width: 100%;
+  margin: ;
+}
+
+#popup-inner img{
+ width: 100%;
+}
+
+.cards {
+  flex: 1;
+  height: 50px;
+}
+
+#characterbar {
+  display: flex;
+  width: 80%;
+  height: 30%;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  margin-left: 15px;
+  margin-right: 15px;
+  color: black;
+  justify-content: center;
+  text-shadow: none;
+}
+
+#characterbar2 {
+  display: flex;
+  width: 80%;
+  height: 30%;
+  margin: 20px;
+  color: black;
+  justify-content: center;
+  text-align: center;
+  text-shadow: none;
+}
+
+.characterbutton {
+  width: 100%;
+  margin: 10px;
+}
+
+#myCanvas {
+  border-style: solid;
+  background-color: black;
+  margin: 10px;
+  border-width: 3px;
+  border-radius: 20px;
+  border-color: white;
+}
+
+#content {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 40px;
+}
+
+#loginmessagediv {
+  color: #ae00ff;
+  font-size: 20px;
+  margin-top: 20px;
+}
+
+#logindiv {
+  display: flex;
+  flex-direction: column;
+  width: 203px;
+  background-color: #745788;
+  padding: 25px;
+  border-radius: 10px;
+  justify-content: center;
+  align-items: center;
+}
+
+input {
+  margin: 8px;
+  font-size: 18px;
+  font-family: 'Monda';
+  background-color: #333;
+  color: white;
+  padding: 6px;
+}
+
+button {
+  border-style: none;
+  padding: 8px;
+  width: 240px;
+  font-size: 22px;
+  color: white;
+  background-color: #5f4173;
+  border-radius: 10px;
+  transition: 0.2s;
+  align-items: center;
+  justify-content: center;
+  margin-top: 10px;
+  font-family: 'Monda';
+  box-shadow: 0px 0px 7px #333333;
+}
+
+button:hover {
+  border-style: none;
+  padding: 8px;
+  font-size: 22px;
+  color: white;
+  background-color: #e8d058;
+  border-radius: 10px;
+  transition: 0.2s;
+}
+
+.characterbutton.green {
+  background-color: green;
+}
+
+/* #joy1Div {
+  width: 100px;
+  height: 100px;
+  margin: 20px;
+  position: absolute;
+  right: 0;
+} */
+
+#character {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50%;
+}
+
+#userstatsdiv {
+  max-width: 240px;
+  width: 100%;
+}
+
+#head img,
+#body img,
+#legs img {
+  width: 30%;
+  height: auto;
+}
+
+#arrows {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10%;
+}
+
+#arrows>div {
+  width: 10%;
+  height: auto;
+  background-color: gray;
+  opacity: 0.5;
+}
+
+#arrows>div:hover {
+  cursor: pointer;
+  opacity: 1;
+}
+
+.cards {
+  align-items: center;
+  display: flex;
+}
+
+#character1 {
+  background-color: #5f4173;
+}
+
+#customizationtitle {
+  color: white;
+  font-size: 32px;
+}
+
+@media (max-width: 600px) {
+  #myCanvas {
+    width: 95%;
+  }
+
+  #characterbar {
+    flex-direction: column;
+  }
+
+  #characterbar2 {
+    flex-direction: column;
+  }
+}
